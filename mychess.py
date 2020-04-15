@@ -114,18 +114,6 @@ def main():
             print("Black chose: ", move.uci())
             print("Score: ", score)
             print('\n')
-            # while True:
-            #     b_in = input("BLACK's turn: ")
-            #     print("\n")
-            #     try:
-            #         b_in = board.push_san(b_in)
-            #     except ValueError:
-            #         print("Invalid input, try again.")
-            #         print("Legal moves: ")
-            #         for i in list(board.legal_moves):
-            #             print(i)
-            #         continue
-            #     break
 
         print(board.unicode())
         # print_captured(board)
