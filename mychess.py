@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import chess
-import random
+# import random
 
-def player(board):
-    move = random.choice(list(board.legal_moves))
-    return move.uci()
+# def player(board):
+#     move = random.choice(list(board.legal_moves))
+#     return move.uci()
+
 
 def evaluate(board):
     white = {"P":10, "N":30, "B":30, "R":50, "Q":90, "K":900}
@@ -25,7 +26,6 @@ def minimax(board, depth, turn):
     if (depth == 0):
         return None, evaluate(board)
 
-    # child_boards = []
     possible_moves = list(board.legal_moves)
 
     if (turn == 1):
@@ -36,7 +36,6 @@ def minimax(board, depth, turn):
             temp_board = board.copy()
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
-
             if score > max_score:
                 max_score = score
                 max_move = move
@@ -51,7 +50,6 @@ def minimax(board, depth, turn):
             temp_board = board.copy()
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
-
             if score < min_score:
                 min_score = score
                 min_move = move
@@ -114,6 +112,7 @@ while (not board.is_game_over()):
         move, score = minimax(board, 3, 0)
         board.push_uci(move.uci())
         print("Black chose: ", move.uci())
+        print("Score: ", score)
         print('\n')
         # while True:
         #     b_in = input("BLACK's turn: ")
