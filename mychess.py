@@ -6,10 +6,31 @@ import chess
 #     move = random.choice(list(board.legal_moves))
 #     return move.uci()
 
-
-def evaluate(board):
+def evaluateRoot(board):
+    #does not work
     # white = {"P":10, "N":30, "B":30, "R":50, "Q":90, "K":900}
     # black = {"p":-10, "n":-30, "b":-30, "r":-50, "q":-90, "k":-900}
+    #works
+    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
+    fen = board.board_fen()
+
+    w_score = 0
+    b_score = 0
+
+    for k,v in white.items():
+        w_score += fen.count(k) * v
+        # print("kv: ", k, v, "count(k): ", fen.count(k))
+    for k,v in black.items():
+        b_score += fen.count(k) * v
+    # print("w: ", w_score, " b: ", b_score)
+    return w_score + b_score
+
+def evaluate(board):
+    #does not work
+    # white = {"P":10, "N":30, "B":30, "R":50, "Q":90, "K":900}
+    # black = {"p":-10, "n":-30, "b":-30, "r":-50, "q":-90, "k":-900}
+    #works
     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
     fen = board.board_fen()
@@ -21,7 +42,6 @@ def evaluate(board):
         w_score += fen.count(k) * v
     for k,v in black.items():
         b_score += fen.count(k) * v
-
     return w_score + b_score
 
 def minimax(board, depth, turn):
@@ -42,7 +62,7 @@ def minimax(board, depth, turn):
 
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
-
+                # evaluateRoot(board)
             if score > max_score:
                 max_score = score
                 max_move = move
@@ -60,7 +80,7 @@ def minimax(board, depth, turn):
 
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
-
+                # evaluateRoot(board)
             if score < min_score:
                 min_score = score
                 min_move = move
@@ -106,6 +126,9 @@ def main():
 
     while (not board.is_game_over()):
         if (turn % 2 == 0):
+            if board.is_check():
+                print("WHITE is in CHECK.")
+
             while True:
                 w_in = input("WHITE's turn: ")
                 print("\n")
@@ -119,15 +142,14 @@ def main():
                     continue
                 break
         else:
+            if board.is_check():
+                print("BLACK is in CHECK.")
             # move = player(board)
             move, score = minimax(board, 3, 1)
             print("Black chose: ", board.san(move))
             print("Score: ", score)
             print('\n')
             board.push_uci(move.uci())
-            # print("Black chose: ", board.san(move))
-            # print("Score: ", score)
-            # print('\n')
 
         print(board.unicode())
         # print_captured(board)
