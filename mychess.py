@@ -8,8 +8,10 @@ import chess
 
 
 def evaluate(board):
-    white = {"P":10, "N":30, "B":30, "R":50, "Q":90, "K":900}
-    black = {"p":-10, "n":-30, "b":-30, "r":-50, "q":-90, "k":-900}
+    # white = {"P":10, "N":30, "B":30, "R":50, "Q":90, "K":900}
+    # black = {"p":-10, "n":-30, "b":-30, "r":-50, "q":-90, "k":-900}
+    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
     fen = board.board_fen()
 
     w_score = 0
@@ -28,6 +30,7 @@ def minimax(board, depth, turn):
 
     possible_moves = list(board.legal_moves)
 
+    values = []
     if (turn == 1):
         max_score = -9999
         max_move = None
@@ -36,6 +39,10 @@ def minimax(board, depth, turn):
             temp_board = board.copy()
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
+
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
+
             if score > max_score:
                 max_score = score
                 max_move = move
@@ -50,6 +57,10 @@ def minimax(board, depth, turn):
             temp_board = board.copy()
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
+
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
+
             if score < min_score:
                 min_score = score
                 min_move = move
@@ -109,11 +120,14 @@ def main():
                 break
         else:
             # move = player(board)
-            move, score = minimax(board, 3, 0)
-            board.push_uci(move.uci())
-            print("Black chose: ", move.uci())
+            move, score = minimax(board, 3, 1)
+            print("Black chose: ", board.san(move))
             print("Score: ", score)
             print('\n')
+            board.push_uci(move.uci())
+            # print("Black chose: ", board.san(move))
+            # print("Score: ", score)
+            # print('\n')
 
         print(board.unicode())
         # print_captured(board)
