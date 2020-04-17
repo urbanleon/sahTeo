@@ -60,8 +60,8 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            if (depth == 3):
-                print("mv: ", board.san(move), " score: ", score)
+            # if (depth == 3):
+            #     print("mv: ", board.san(move), " score: ", score)
                 # evaluateRoot(board)
             if score > max_score:
                 max_score = score
@@ -78,8 +78,8 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            if (depth == 3):
-                print("mv: ", board.san(move), " score: ", score)
+            # if (depth == 3):
+            #     print("mv: ", board.san(move), " score: ", score)
                 # evaluateRoot(board)
             if score < min_score:
                 min_score = score
@@ -121,7 +121,7 @@ def minimax(board, depth, turn):
 def main():
     board = chess.Board()
     turn = 0
-    print(board.unicode())
+    print(board.unicode(borders=True))
     print("\n")
 
     while (not board.is_game_over()):
@@ -135,7 +135,7 @@ def main():
                 try:
                     w_in = board.push_san(w_in)
                 except ValueError:
-                    print(board.unicode())
+                    print(board.unicode(borders=True))
                     print("Invalid input, try again.")
                     # print("Legal moves: ")
                     # [print(i) for i in list(board.legal_moves)]
@@ -151,7 +151,7 @@ def main():
             print('\n')
             board.push_uci(move.uci())
 
-        print(board.unicode())
+        print(board.unicode(borders=True))
         # print_captured(board)
         print("\n")
         turn += 1
