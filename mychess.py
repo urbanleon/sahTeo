@@ -98,10 +98,10 @@ def print_captured(board):
         else:
             black[k] = 1 - remaining.count(k)
 
-
+    print('\n')
     for k, v in white.items():
         print(chess.UNICODE_PIECE_SYMBOLS[k] * v, end=' ')
-    # print('\n')
+    print('\n')
     for k, v in black.items():
         print(chess.UNICODE_PIECE_SYMBOLS[k] * v, end=' ')
     print('\n')
