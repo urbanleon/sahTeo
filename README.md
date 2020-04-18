@@ -8,6 +8,6 @@ Dependencies:
 * Python-chess (library) : https://python-chess.readthedocs.io/en/latest/#
   * pip install python-chess
 ***
-Run:
+<strong>Run</strong>:
 - Navigate to folder containing mychess.py
 - type python3 mychess.py (or ./mychess.py with right permissions)
