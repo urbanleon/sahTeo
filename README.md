@@ -6,7 +6,7 @@ with white and black pieces having equal and opposite point values, and adds the
 
 Dependencies:
 * Python-chess (library) : https://python-chess.readthedocs.io/en/latest/#
-  *pip install python-chess
+  * pip install python-chess
 ***
 Run:
 - Navigate to folder containing mychess.py
