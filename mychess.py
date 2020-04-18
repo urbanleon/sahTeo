@@ -2,21 +2,6 @@
 import chess
 # import random
 
-def evaluateRoot(board):
-    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-    fen = board.board_fen()
-
-    w_score = 0
-    b_score = 0
-
-    for k,v in white.items():
-        w_score += fen.count(k) * v
-    for k,v in black.items():
-        b_score += fen.count(k) * v
-    return w_score + b_score
-
-
 def evaluate(board):
     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
