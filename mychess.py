@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import chess
-# import random
+import random
 
 # def player(board):
 #     move = random.choice(list(board.legal_moves))
@@ -50,7 +50,7 @@ def minimax(board, depth, turn):
 
     possible_moves = list(board.legal_moves)
 
-    values = []
+
     if (turn == 1):
         max_score = -9999
         max_move = None
@@ -60,10 +60,10 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
                 # evaluateRoot(board)
-            if score > max_score:
+            if score >= max_score:
                 max_score = score
                 max_move = move
 
@@ -78,10 +78,10 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
                 # evaluateRoot(board)
-            if score < min_score:
+            if score <= min_score:
                 min_score = score
                 min_move = move
 
