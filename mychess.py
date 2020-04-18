@@ -134,7 +134,7 @@ def main():
         print("Game over!")
 
     end_game = board.result()
-    
+
     if end_game == "1-0":
         print("WHITE wins!")
     elif end_game == "0-1":
