@@ -12,5 +12,5 @@ with white and black pieces having equal and opposite point values, and adds the
 * Python-chess (modified, included) : https://python-chess.readthedocs.io/en/latest/#
 ***
 <strong>Run</strong>:
-- Navigate to folder containing mychess.py
-- type python3 mychess.py (or ./mychess.py with right permissions)
+- Requires Python3.6 or greater
+- type python3 mychess.py
