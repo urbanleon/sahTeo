@@ -1193,7 +1193,6 @@ class BaseBoard:
             builder.append("-" * 25)
             builder.append("\n")
             builder.append("    a  b  c  d  e  f  g  h")
-            builder.append("\n HELLO THIS IS TOMMY")
 
         return "".join(builder)
 
