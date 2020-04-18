@@ -1,4 +1,4 @@
-# chess
+# Chess
 
 This program plays a Human vs. Computer game of Chess. The progam implements the Minimax algorithm that searches through 3 levels of the game tree. 
 The evaluation function to score the board ranks the relative importance of each piece on the board,
