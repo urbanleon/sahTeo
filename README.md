@@ -9,8 +9,7 @@ with white and black pieces having equal and opposite point values, and adds the
 ***
 
 <strong>Dependencies</strong>:
-* Python-chess (library) : https://python-chess.readthedocs.io/en/latest/#
-  * pip install python-chess
+* Python-chess (modified, included) : https://python-chess.readthedocs.io/en/latest/#
 ***
 <strong>Run</strong>:
 - Navigate to folder containing mychess.py
