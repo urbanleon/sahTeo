@@ -127,9 +127,14 @@ def main():
         print_captured(board)
         print("\n")
         turn += 1
-    print("Checkmate!")
+
+    if (board.is_checkmate()):
+        print("Checkmate!")
+    else:
+        print("Game over!")
 
     end_game = board.result()
+    
     if end_game == "1-0":
         print("WHITE wins!")
     elif end_game == "0-1":
