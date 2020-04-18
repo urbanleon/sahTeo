@@ -5,9 +5,8 @@ The evaluation function to score the board ranks the relative importance of each
 with white and black pieces having equal and opposite point values, and adds the two scores together. 
 
 Dependencies:
-- Python-chess (library) : https://python-chess.readthedocs.io/en/latest/#
-<br>
-  -> pip install python-chess
+* Python-chess (library) : https://python-chess.readthedocs.io/en/latest/#
+  *pip install python-chess
 ***
 Run:
 - Navigate to folder containing mychess.py
