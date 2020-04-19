@@ -125,7 +125,7 @@ def main():
 
         print(board.unicode(borders=True))
         print_captured(board)
-        print("\n")
+        # print("\n")
         turn += 1
 
     if (board.is_checkmate()):
