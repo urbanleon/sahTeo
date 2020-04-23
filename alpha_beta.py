@@ -2,11 +2,87 @@
 import chess
 # import random
 
+#have to reverse piece tables because array indexing is reverse of chess board indexing
+
+# chess board index
+#  8 . . . 63
+#    . . . .
+#  ^ . . . .
+#  1 0 . . .
+#    a  >  h
+#
+# piece tables index
+#  8 0 . . .
+#    . . . .
+#  ^ . . . .
+#  1 . . . 63
+#    a  >  h
+
+pawntable = [0,  0,  0,  0,  0,  0,  0,  0,
+             5, 10, 10,-20,-20, 10, 10,  5,
+             5, -5,-10,  0,  0,-10, -5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5,  5, 10, 25, 25, 10,  5,  5,
+            10, 10, 20, 30, 30, 20, 10, 10,
+            50, 50, 50, 50, 50, 50, 50, 50,
+             0,  0,  0,  0,  0,  0,  0,  0]
+
+knightstable = [-50,-40,-30,-30,-30,-30,-40,-50,
+                -40,-20,  0,  5,  5,  0,-20,-40,
+                -30,  5, 10, 15, 15, 10,  5,-30,
+                -30,  0, 15, 20, 20, 15,  0,-30,
+                -30,  5, 15, 20, 20, 15,  5,-30,
+                -30,  0, 10, 15, 15, 10,  0,-30,
+                -40,-20,  0,  0,  0,  0,-20,-40,
+                -50,-40,-30,-30,-30,-30,-40,-50]
+
+bishoptable = [-20,-10,-10,-10,-10,-10,-10,-20,
+               -10,  5,  0,  0,  0,  0,  5,-10,
+               -10, 10, 10, 10, 10, 10, 10,-10,
+               -10,  0, 10, 10, 10, 10,  0,-10,
+               -10,  5,  5, 10, 10,  5,  5,-10,
+               -10,  0,  5, 10, 10,  5,  0,-10,
+               -10,  0,  0,  0,  0,  0,  0,-10,
+               -20,-10,-10,-10,-10,-10,-10,-20]
+
+rooktable =   [0,  0,  0,  5,  5,  0,  0,  0
+              -5,  0,  0,  0,  0,  0,  0, -5,
+              -5,  0,  0,  0,  0,  0,  0, -5,
+              -5,  0,  0,  0,  0,  0,  0, -5,
+              -5,  0,  0,  0,  0,  0,  0, -5,
+              -5,  0,  0,  0,  0,  0,  0, -5,
+               5, 10, 10, 10, 10, 10, 10,  5,
+               0,  0,  0,  0,  0,  0,  0,  0]
+
+queentable = [-20,-10,-10, -5, -5,-10,-10,-20,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -10,  5,  5,  5,  5,  5,  0,-10,
+                0,  0,  5,  5,  5,  5,  0, -5,
+               -5,  0,  5,  5,  5,  5,  0, -5,
+              -10,  0,  5,  5,  5,  5,  0,-10,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -20,-10,-10, -5, -5,-10,-10,-20]
+
+kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
+             20, 20,  0,  0,  0,  0, 20, 20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30]
+
 def evaluate(board):
     #import piece square tables
     #evalutaion function is weighted linear function piece value and position
     pawn = sum([pawntable[i] * 10 for i in board.pieces(chess.PAWN, chess.WHITE)])
     pawn += sum([-pawntable[chess.square_mirror(i)] * -10 for i in board.pieces(chess.PAWN, chess.BLACK)])
+
+    knight = sum([knightstable[i] * 30 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
+    knight += sum([-knightstable[chess.square_mirror(i)] * -30 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+
+    bishop = sum([bishoptable[i] * 30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
+    bishop += sum([-bishoptable[chess.square_mirror(i)] * -30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
 
 def evaluate(board):
     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
