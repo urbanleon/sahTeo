@@ -33,8 +33,8 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
             if score >= max_score:
                 max_score = score
@@ -51,8 +51,8 @@ def minimax(board, depth, turn):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
 
             if score <= min_score:

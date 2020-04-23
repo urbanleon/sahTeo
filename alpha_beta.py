@@ -45,14 +45,14 @@ bishoptable = [-20,-10,-10,-10,-10,-10,-10,-20,
                -10,  0,  0,  0,  0,  0,  0,-10,
                -20,-10,-10,-10,-10,-10,-10,-20]
 
-rooktable =   [0,  0,  0,  5,  5,  0,  0,  0
-              -5,  0,  0,  0,  0,  0,  0, -5,
-              -5,  0,  0,  0,  0,  0,  0, -5,
-              -5,  0,  0,  0,  0,  0,  0, -5,
-              -5,  0,  0,  0,  0,  0,  0, -5,
-              -5,  0,  0,  0,  0,  0,  0, -5,
-               5, 10, 10, 10, 10, 10, 10,  5,
-               0,  0,  0,  0,  0,  0,  0,  0]
+rooktable = [0,  0,  0,  5,  5,  0,  0,  0,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+             5, 10, 10, 10, 10, 10, 10,  5,
+             0,  0,  0,  0,  0,  0,  0,  0]
 
 queentable = [-20,-10,-10, -5, -5,-10,-10,-20,
               -10,  0,  0,  0,  0,  0,  0,-10,
@@ -79,42 +79,6 @@ kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
 # queentable = [i / 10 for i in queentable]
 # kingtable = [i / 10 for i in kingtable]
 
-# def evaluate(board):
-#
-#     wp = len(board.pieces(chess.PAWN, chess.WHITE))
-#     bp = len(board.pieces(chess.PAWN, chess.BLACK))
-#     wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
-#     bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
-#     wb = len(board.pieces(chess.BISHOP, chess.WHITE))
-#     bb = len(board.pieces(chess.BISHOP, chess.BLACK))
-#     wr = len(board.pieces(chess.ROOK, chess.WHITE))
-#     br = len(board.pieces(chess.ROOK, chess.BLACK))
-#     wq = len(board.pieces(chess.QUEEN, chess.WHITE))
-#     bq = len(board.pieces(chess.QUEEN, chess.BLACK))
-#
-#     material = 100*(wp-bp)+320*(wn-bn)+330*(wb-bb)+500*(wr-br)+900*(wq-bq)
-#
-#     pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
-#     pawnsq= pawnsq + sum([-pawntable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.PAWN, chess.BLACK)])
-#     knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-#     knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.KNIGHT, chess.BLACK)])
-#     bishopsq= sum([bishoptable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
-#     bishopsq= bishopsq + sum([-bishoptable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.BISHOP, chess.BLACK)])
-#     rooksq = sum([rooktable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
-#     rooksq = rooksq + sum([-rooktable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.ROOK, chess.BLACK)])
-#     queensq = sum([queentable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
-#     queensq = queensq + sum([-queentable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.QUEEN, chess.BLACK)])
-#     kingsq = sum([kingtable[i] for i in board.pieces(chess.KING, chess.WHITE)])
-#     kingsq = kingsq + sum([-kingtable[chess.square_mirror(i)]
-#                                     for i in board.pieces(chess.KING, chess.BLACK)])
-#
-#     eval = material + pawnsq + knightsq + bishopsq+ rooksq+ queensq + kingsq
-#     return eval
 
 def evaluate(board):
     pawn = sum([pawntable[i] + 10 for i in board.pieces(chess.PAWN, chess.WHITE)])
@@ -126,8 +90,18 @@ def evaluate(board):
     bishop = sum([bishoptable[i] + 30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
     bishop += sum([-bishoptable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
 
+
     rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.WHITE)])
     rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.BLACK)])
+    if ([i for i in board.pieces(chess.ROOK, chess.WHITE)] == [0, 7, 63]):
+        board1 = board.copy()
+        print(board1.unicode())
+        print(board1.peek())
+        print('\n')
+        board1.pop()
+        print(board1.unicode())
+        print(board1.peek())
+        # (_, score) = minimax(board1, 3, 0)
 
     queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
     queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
@@ -175,7 +149,7 @@ def minimax(board, depth, turn):
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
 
-            if score >= max_score:
+            if score > max_score:
                 max_score = score
                 max_move = move
 
@@ -194,7 +168,7 @@ def minimax(board, depth, turn):
                 print("mv: ", board.san(move), " score: ", score)
 
 
-            if score <= min_score:
+            if score < min_score:
                 min_score = score
                 min_move = move
 
@@ -232,6 +206,7 @@ def print_captured(board):
 
 def main():
     board = chess.Board()
+    board.set_board_fen("1nb1kqnr/r2pp1P1/1pp2p2/p7/P3P2Q/2NB1N1P/1PPB1P2/R3K2R")
     turn = 0
     print(board.unicode(borders=True))
     print("\n")
