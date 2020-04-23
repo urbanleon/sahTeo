@@ -84,22 +84,34 @@ def evaluate(board):
     bishop = sum([bishoptable[i] * 30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
     bishop += sum([-bishoptable[chess.square_mirror(i)] * -30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
 
-def evaluate(board):
-    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-    fen = board.board_fen()
+    rook = sum([rooktable[i] * 50 for i in board.pieces(chess.ROOK, chess.WHITE)])
+    rook += sum([-rooktable[chess.square_mirror(i)] * -50 for i in board.pieces(chess.ROOK, chess.BLACK)])
 
-    w_score = 0
-    b_score = 0
+    queen = sum([queentable[i] * 90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
+    queen += sum([-queentable[chess.square_mirror(i)] * -90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
 
-    for k,v in white.items():
-        w_score += fen.count(k) * v
-    for k,v in black.items():
-        b_score += fen.count(k) * v
+    king = sum([kingtable[i] * 900 for i in board.pieces(chess.KING, chess.WHITE)])
+    king += sum([-kingtable[chess.square_mirror(i)] * -900 for i in board.pieces(chess.KING, chess.BLACK)])
 
-    naive_score = w_score + b_score
+    return pawn + knight + rook + queen + king
 
-    return w_score + b_score
+
+# def evaluate(board):
+#     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+#     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
+#     fen = board.board_fen()
+#
+#     w_score = 0
+#     b_score = 0
+#
+#     for k,v in white.items():
+#         w_score += fen.count(k) * v
+#     for k,v in black.items():
+#         b_score += fen.count(k) * v
+#
+#     naive_score = w_score + b_score
+#
+#     return w_score + b_score
 
 
 def minimax(board, depth, turn):
