@@ -93,15 +93,15 @@ def evaluate(board):
 
     rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.WHITE)])
     rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.BLACK)])
-    if ([i for i in board.pieces(chess.ROOK, chess.WHITE)] == [0, 7, 63]):
-        board1 = board.copy()
-        print(board1.unicode())
-        print(board1.peek())
-        print('\n')
-        board1.pop()
-        print(board1.unicode())
-        print(board1.peek())
-        # (_, score) = minimax(board1, 3, 0)
+    # if ([i for i in board.pieces(chess.ROOK, chess.WHITE)] == [0, 7, 63]):
+    #     board1 = board.copy()
+    #     print(board1.unicode())
+    #     print(board1.peek())
+    #     print('\n')
+    #     board1.pop()
+    #     print(board1.unicode())
+    #     print(board1.peek())
+    #     # (_, score) = minimax(board1, 3, 0
 
     queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
     queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
@@ -126,7 +126,6 @@ def evaluate(board):
 #         b_score += fen.count(k) * v
 #
 #     naive_score = w_score + b_score
-#
 #     return w_score + b_score
 
 
@@ -149,7 +148,7 @@ def minimax(board, depth, turn):
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
 
-            if score > max_score:
+            if score >= max_score:
                 max_score = score
                 max_move = move
 
@@ -168,7 +167,7 @@ def minimax(board, depth, turn):
                 print("mv: ", board.san(move), " score: ", score)
 
 
-            if score < min_score:
+            if score <= min_score:
                 min_score = score
                 min_move = move
 
@@ -206,7 +205,8 @@ def print_captured(board):
 
 def main():
     board = chess.Board()
-    board.set_board_fen("1nb1kqnr/r2pp1P1/1pp2p2/p7/P3P2Q/2NB1N1P/1PPB1P2/R3K2R")
+    # board.set_board_fen("1nb1kqnr/r2pp1P1/1pp2p2/p7/P3P2Q/2NB1N1P/1PPB1P2/R3K2R")
+    # board.set_fen('rnb3B1/3p2b1/1pp1pp2/p2kN2p/P2P3P/BP1QPN2/2P2PP1/R3K2R b KQ - 0 1')
     turn = 0
     print(board.unicode(borders=True))
     print("\n")
@@ -232,7 +232,10 @@ def main():
             # print("BLACK's turn. ")
 
             move, score = minimax(board, 3, 1)
-            print("BLACK's move: ", board.san(move))
+            try:
+                print("BLACK's move: ", board.san(move))
+            except AttributeError:
+                print("legal moves: ", board.legal_moves)
             # print("Score: ", score)
             print('\n')
             board.push_uci(move.uci())
