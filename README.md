@@ -14,10 +14,10 @@ with white and black pieces having equal and opposite point values, and adds the
 * Stockfish engine in `/usr/games/` (if using `minimax_stockfish.py`)
 ***
 <strong>Run Instructions</strong>:
-- (Requires Python3.6 or greater)
-- Original evaluation function:
- - `$ python3 chess_minimax.py`
+* (Requires Python3.6 or greater)
+* Original evaluation function:
+  * `$ python3 chess_minimax.py`
 - Updated evaluation function:
- - `$ python3 chess_minimax.py`
+  - `$ python3 chess_minimax.py`
 - My engine vs. Stockfish engine at lowest settings:
- - `$ python3 minimax_stockfish.py`
+  - `$ python3 minimax_stockfish.py`
