@@ -13,5 +13,4 @@ with white and black pieces having equal and opposite point values, and adds the
   * includes modified board printout 
 ***
 <strong>Run Instructions</strong>:
-- Requires Python3.6 or greater
-- type `$ python3 mychess.py`
+- `$ python3 mychess.py` (Requires Python3.6 or greater)
