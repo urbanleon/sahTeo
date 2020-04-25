@@ -11,6 +11,13 @@ with white and black pieces having equal and opposite point values, and adds the
 <strong>Dependencies</strong>:
 * Python-chess (included) : https://python-chess.readthedocs.io/en/latest/#
   * includes modified board printout 
+* Stockfish engine in `/usr/games/` (if using `minimax_stockfish.py`)
 ***
 <strong>Run Instructions</strong>:
-- `$ python3 mychess.py` (Requires Python3.6 or greater)
+- (Requires Python3.6 or greater)
+- Original evaluation function:
+ - `$ python3 chess_minimax.py`
+- Updated evaluation function:
+ - `$ python3 chess_minimax.py`
+- My engine vs. Stockfish engine at lowest settings:
+ - `$ python3 minimax_stockfish.py`
