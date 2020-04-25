@@ -14,4 +14,4 @@ with white and black pieces having equal and opposite point values, and adds the
 ***
 <strong>Run Instructions</strong>:
 - Requires Python3.6 or greater
-- type <em>python3 mychess.py</em>
+- type `python3 mychess.py`
