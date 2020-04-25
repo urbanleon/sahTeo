@@ -1,4 +1,4 @@
-# Chess
+# Simple Chess Engine
 
 <strong>Summary</strong>
 <br>
