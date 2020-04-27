@@ -22,11 +22,13 @@ def minimax(board, depth, turn):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
+    possible_moves.reverse()
 
 
     if (turn == 1):
         max_score = -9999
-        max_move = None
+        # max_move = None
+        max_move = possible_moves[len(possible_moves) - 1]
 
         for move in possible_moves:
             temp_board = board.copy()
@@ -36,7 +38,7 @@ def minimax(board, depth, turn):
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
 
-            if score >= max_score:
+            if score > max_score:
                 max_score = score
                 max_move = move
 
@@ -44,7 +46,8 @@ def minimax(board, depth, turn):
 
     else:
         min_score = 9999
-        min_move = None
+        # min_move = None
+        min_move = possible_moves[len(possible_moves) - 1]
 
         for move in possible_moves:
             temp_board = board.copy()
@@ -55,7 +58,7 @@ def minimax(board, depth, turn):
                 print("mv: ", board.san(move), " score: ", score)
 
 
-            if score <= min_score:
+            if score < min_score:
                 min_score = score
                 min_move = move
 

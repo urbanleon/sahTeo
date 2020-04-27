@@ -80,96 +80,107 @@ kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
 # kingtable = [i / 10 for i in kingtable]
 
 
-def evaluate(board):
-    pawn = sum([pawntable[i] + 10 for i in board.pieces(chess.PAWN, chess.WHITE)])
-    pawn += sum([-pawntable[chess.square_mirror(i)] + -10 for i in board.pieces(chess.PAWN, chess.BLACK)])
-
-    knight = sum([knightstable[i] + 30 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-    knight += sum([-knightstable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
-
-    bishop = sum([bishoptable[i] + 30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
-    bishop += sum([-bishoptable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
-
-
-    rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.WHITE)])
-    rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.BLACK)])
-    # if ([i for i in board.pieces(chess.ROOK, chess.WHITE)] == [0, 7, 63]):
-    #     board1 = board.copy()
-    #     print(board1.unicode())
-    #     print(board1.peek())
-    #     print('\n')
-    #     board1.pop()
-    #     print(board1.unicode())
-    #     print(board1.peek())
-    #     # (_, score) = minimax(board1, 3, 0
-
-    queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
-    queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
-
-    king = sum([kingtable[i] + 900 for i in board.pieces(chess.KING, chess.WHITE)])
-    king += sum([-kingtable[chess.square_mirror(i)] + -900 for i in board.pieces(chess.KING, chess.BLACK)])
-
-    return pawn + knight + rook + queen + king
-
-
 # def evaluate(board):
-#     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-#     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-#     fen = board.board_fen()
+#     pawn = sum([pawntable[i] + 100 for i in board.pieces(chess.PAWN, chess.WHITE)])
+#     pawn += sum([-pawntable[chess.square_mirror(i)] + -100 for i in board.pieces(chess.PAWN, chess.BLACK)])
 #
-#     w_score = 0
-#     b_score = 0
+#     knight = sum([knightstable[i] + 320 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
+#     knight += sum([-knightstable[chess.square_mirror(i)] + -320 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
 #
-#     for k,v in white.items():
-#         w_score += fen.count(k) * v
-#     for k,v in black.items():
-#         b_score += fen.count(k) * v
+#     bishop = sum([bishoptable[i] + 330 for i in board.pieces(chess.BISHOP, chess.WHITE)])
+#     bishop += sum([-bishoptable[chess.square_mirror(i)] + -330 for i in board.pieces(chess.BISHOP, chess.BLACK)])
 #
-#     naive_score = w_score + b_score
-#     return w_score + b_score
+#
+#     rook = sum([rooktable[i] + 500 for i in board.pieces(chess.ROOK, chess.WHITE)])
+#     rook += sum([-rooktable[chess.square_mirror(i)] + -500 for i in board.pieces(chess.ROOK, chess.BLACK)])
+#
+#     queen = sum([queentable[i] + 900 for i in board.pieces(chess.QUEEN, chess.WHITE)])
+#     queen += sum([-queentable[chess.square_mirror(i)] + -900 for i in board.pieces(chess.QUEEN, chess.BLACK)])
+#
+#     king = sum([kingtable[i] + 20000 for i in board.pieces(chess.KING, chess.WHITE)])
+#     king += sum([-kingtable[chess.square_mirror(i)] + -20000 for i in board.pieces(chess.KING, chess.BLACK)])
+#
+#     return pawn + knight + rook + queen + king
 
 
-def minimax(board, depth, turn):
+def evaluate(board):
+    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
+    fen = board.board_fen()
+
+    w_score = 0
+    b_score = 0
+
+    for k,v in white.items():
+        w_score += fen.count(k) * v
+    for k,v in black.items():
+        b_score += fen.count(k) * v
+
+    naive_score = w_score + b_score
+    return w_score + b_score
+
+
+def minimax(board, depth, turn, alpha, beta):
     if (depth == 0):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
+    possible_moves.reverse()
 
 
-    if (turn == 1):
+    if (turn == 1): #MAX
         max_score = -9999
-        max_move = None
+        # max_move = None
+        # maybe change to random choice to
+        # prevent repeated moves
+
+        max_move = possible_moves[0]
+
 
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn)
+            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
 
-            if score >= max_score:
+            if score > max_score:
                 max_score = score
                 max_move = move
 
+            if max_score > alpha:
+                alpha = max_score
+
+            if alpha >= beta:
+                break
+
+
         return max_move, max_score
 
-    else:
+    else: #MIN
         min_score = 9999
-        min_move = None
+        # min_move = None
+        min_move = possible_moves[0]
 
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn)
+            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
             if (depth == 3):
                 print("mv: ", board.san(move), " score: ", score)
 
 
-            if score <= min_score:
+            if score < min_score:
                 min_score = score
                 min_move = move
+
+            if min_score < beta:
+                beta = min_score
+
+            if alpha >= beta:
+                break
 
         return min_move, min_score
 
@@ -231,7 +242,7 @@ def main():
                 print("BLACK is in CHECK.")
             # print("BLACK's turn. ")
 
-            move, score = minimax(board, 3, 1)
+            move, score = minimax(board, 3, 1, -10000, 10000)
             try:
                 print("BLACK's move: ", board.san(move))
             except AttributeError:
