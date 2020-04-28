@@ -18,9 +18,9 @@ The Minimax algorithm is a search algorithm for finding the optimal move to make
 ***
 <strong>Run Instructions</strong>:
 * (Requires Python3.6 or greater)
-* Original evaluation function:
+* Minimax:
   * `$ python3 chess_minimax.py`
-- Updated evaluation function:
-  - `$ python3 chess_minimax.py`
+- Minimax with Alpha-Beta Pruning:
+  - `$ python3 alpha_beta.py`
 - My engine vs. Stockfish engine at lowest settings:
   - `$ python3 minimax_stockfish.py`
