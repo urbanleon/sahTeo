@@ -180,7 +180,7 @@ kingtable = [i / 10 for i in kingtable]
 #     return -eval
 
 def evaluate(board):
-    if game.is_checkmate():
+    if board.is_checkmate():
         if not board.turn:
             return 9999
         else:
