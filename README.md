@@ -15,6 +15,7 @@ The Minimax algorithm is a search algorithm for finding the optimal move to make
 * Python-chess (included) : https://python-chess.readthedocs.io/en/latest/#
   * includes modified board printout 
 * Stockfish engine in `/usr/games/` (if using `minimax_stockfish.py`)
+  * Can modify `minimax_stockfish.py` to look for stockfish in custom directory 
 ***
 <strong>Run Instructions</strong>:
 * (Requires Python3.6 or greater)
