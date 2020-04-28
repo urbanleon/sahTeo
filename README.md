@@ -8,7 +8,7 @@ My current evaluation function is a linear combination of the number of white vs
 
 The Minimax algorithm is a search algorithm for finding the optimal move to make in a two-player zero-sum game with perfect information (such as chess, checkers, tic-tac-toe). The game tree is recursively generated with each level (turn) alternating between players Max and Min. Max will always choose the greatest score out of its children nodes, and vice versa for Min. 
 
-
+![Minimax Example](https://github.com/tshiels/chess/minimax_img.png)
 ***
 
 <strong>Dependencies</strong>:
