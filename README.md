@@ -3,9 +3,12 @@
 <strong>Summary</strong>
 <br>
 
-This program plays a Human vs. Computer game of Chess. The progam implements the Minimax algorithm that searches 3 levels deep into the game tree. 
-The evaluation function to score the board ranks the relative importance of each piece on the board,
-with white and black pieces having equal and opposite point values, and adds the two scores together. 
+This program plays Chess using the Minimax algorithm with alpha-beta pruning. You can play against the engine, or watch my engine play against the stockfish engine (currently at lowest settings). 
+My current evaluation function is a linear combination of the number of white vs. black pieces on board, with weights being relative to the importance of each type of piece. White and Black weights are equal and opposite. 
+
+The Minimax algorithm is a search algorithm for finding the optimal move to make in a two-player zero-sum game with perfect information (such as chess, checkers, tic-tac-toe). The game tree is recursively generated with each level (turn) alternating between players Max and Min. Max will always choose the greatest score out of its children nodes, and vice versa for Min. 
+
+
 ***
 
 <strong>Dependencies</strong>:
