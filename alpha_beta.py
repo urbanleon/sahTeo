@@ -18,200 +18,200 @@ import chess
 #  1 . . . 63
 #    a  >  h
 
-# pawntable = [0,  0,  0,  0,  0,  0,  0,  0,
-#              5, 10, 10,-20,-20, 10, 10,  5,
-#              5, -5,-10,  0,  0,-10, -5,  5,
-#              0,  0,  0, 20, 20,  0,  0,  0,
-#              5,  5, 10, 25, 25, 10,  5,  5,
-#             10, 10, 20, 30, 30, 20, 10, 10,
-#             50, 50, 50, 50, 50, 50, 50, 50,
-#              0,  0,  0,  0,  0,  0,  0,  0]
+pawntable = [0,  0,  0,  0,  0,  0,  0,  0,
+             5, 10, 10,-20,-20, 10, 10,  5,
+             5, -5,-10,  0,  0,-10, -5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5,  5, 10, 25, 25, 10,  5,  5,
+            10, 10, 20, 30, 30, 20, 10, 10,
+            50, 50, 50, 50, 50, 50, 50, 50,
+             0,  0,  0,  0,  0,  0,  0,  0]
+
+knightstable = [-50,-40,-30,-30,-30,-30,-40,-50,
+                -40,-20,  0,  5,  5,  0,-20,-40,
+                -30,  5, 10, 15, 15, 10,  5,-30,
+                -30,  0, 15, 20, 20, 15,  0,-30,
+                -30,  5, 15, 20, 20, 15,  5,-30,
+                -30,  0, 10, 15, 15, 10,  0,-30,
+                -40,-20,  0,  0,  0,  0,-20,-40,
+                -50,-40,-30,-30,-30,-30,-40,-50]
+
+bishoptable = [-20,-10,-10,-10,-10,-10,-10,-20,
+               -10,  5,  0,  0,  0,  0,  5,-10,
+               -10, 10, 10, 10, 10, 10, 10,-10,
+               -10,  0, 10, 10, 10, 10,  0,-10,
+               -10,  5,  5, 10, 10,  5,  5,-10,
+               -10,  0,  5, 10, 10,  5,  0,-10,
+               -10,  0,  0,  0,  0,  0,  0,-10,
+               -20,-10,-10,-10,-10,-10,-10,-20]
+
+rooktable = [0,  0,  0,  5,  5,  0,  0,  0,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+             5, 10, 10, 10, 10, 10, 10,  5,
+             0,  0,  0,  0,  0,  0,  0,  0]
+
+queentable = [-20,-10,-10, -5, -5,-10,-10,-20,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -10,  5,  5,  5,  5,  5,  0,-10,
+                0,  0,  5,  5,  5,  5,  0, -5,
+               -5,  0,  5,  5,  5,  5,  0, -5,
+              -10,  0,  5,  5,  5,  5,  0,-10,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -20,-10,-10, -5, -5,-10,-10,-20]
+
+kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
+             20, 20,  0,  0,  0,  0, 20, 20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30]
+
+# pawntable = [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+#         5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,
+#         1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0,
+#         0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5,
+#         0.0,  0.0,  0.0,  2.0,  2.0,  0.0,  0.0,  0.0,
+#         0.5, -0.5, -1.0,  0.0,  0.0, -1.0, -0.5,  0.5,
+#         0.5,  1.0, 1.0,  -2.0, -2.0,  1.0,  1.0,  0.5,
+#         0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0]
 #
-# knightstable = [-50,-40,-30,-30,-30,-30,-40,-50,
-#                 -40,-20,  0,  5,  5,  0,-20,-40,
-#                 -30,  5, 10, 15, 15, 10,  5,-30,
-#                 -30,  0, 15, 20, 20, 15,  0,-30,
-#                 -30,  5, 15, 20, 20, 15,  5,-30,
-#                 -30,  0, 10, 15, 15, 10,  0,-30,
-#                 -40,-20,  0,  0,  0,  0,-20,-40,
-#                 -50,-40,-30,-30,-30,-30,-40,-50]
+# knightstable =[
+#         -5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0,
+#         -4.0, -2.0,  0.0,  0.0,  0.0,  0.0, -2.0, -4.0,
+#         -3.0,  0.0,  1.0,  1.5,  1.5,  1.0,  0.0, -3.0,
+#         -3.0,  0.5,  1.5,  2.0,  2.0,  1.5,  0.5, -3.0,
+#         -3.0,  0.0,  1.5,  2.0,  2.0,  1.5,  0.0, -3.0,
+#         -3.0,  0.5,  1.0,  1.5,  1.5,  1.0,  0.5, -3.0,
+#         -4.0, -2.0,  0.0,  0.5,  0.5,  0.0, -2.0, -4.0,
+#         -5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0]
 #
-# bishoptable = [-20,-10,-10,-10,-10,-10,-10,-20,
-#                -10,  5,  0,  0,  0,  0,  5,-10,
-#                -10, 10, 10, 10, 10, 10, 10,-10,
-#                -10,  0, 10, 10, 10, 10,  0,-10,
-#                -10,  5,  5, 10, 10,  5,  5,-10,
-#                -10,  0,  5, 10, 10,  5,  0,-10,
-#                -10,  0,  0,  0,  0,  0,  0,-10,
-#                -20,-10,-10,-10,-10,-10,-10,-20]
+# bishoptable = [
+#      -2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0,
+#      -1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0,
+#      -1.0,  0.0,  0.5,  1.0,  1.0,  0.5,  0.0, -1.0,
+#      -1.0,  0.5,  0.5,  1.0,  1.0,  0.5,  0.5, -1.0,
+#      -1.0,  0.0,  1.0,  1.0,  1.0,  1.0,  0.0, -1.0,
+#      -1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0, -1.0,
+#      -1.0,  0.5,  0.0,  0.0,  0.0,  0.0,  0.5, -1.0,
+#      -2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0
+# ]
 #
-# rooktable = [0,  0,  0,  5,  5,  0,  0,  0,
-#             -5,  0,  0,  0,  0,  0,  0, -5,
-#             -5,  0,  0,  0,  0,  0,  0, -5,
-#             -5,  0,  0,  0,  0,  0,  0, -5,
-#             -5,  0,  0,  0,  0,  0,  0, -5,
-#             -5,  0,  0,  0,  0,  0,  0, -5,
-#              5, 10, 10, 10, 10, 10, 10,  5,
-#              0,  0,  0,  0,  0,  0,  0,  0]
 #
-# queentable = [-20,-10,-10, -5, -5,-10,-10,-20,
-#               -10,  0,  0,  0,  0,  0,  0,-10,
-#               -10,  5,  5,  5,  5,  5,  0,-10,
-#                 0,  0,  5,  5,  5,  5,  0, -5,
-#                -5,  0,  5,  5,  5,  5,  0, -5,
-#               -10,  0,  5,  5,  5,  5,  0,-10,
-#               -10,  0,  0,  0,  0,  0,  0,-10,
-#               -20,-10,-10, -5, -5,-10,-10,-20]
+# rooktable = [
+#       0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
+#       0.5,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  0.5,
+#      -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
+#      -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
+#      -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
+#      -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
+#      -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
+#       0.0,   0.0, 0.0,  0.5,  0.5,  0.0,  0.0,  0.0
+# ]
 #
-# kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
-#              20, 20,  0,  0,  0,  0, 20, 20,
-#             -10,-20,-20,-20,-20,-20,-20,-10,
-#             -20,-30,-30,-40,-40,-30,-30,-20,
-#             -30,-40,-40,-50,-50,-40,-40,-30,
-#             -30,-40,-40,-50,-50,-40,-40,-30,
-#             -30,-40,-40,-50,-50,-40,-40,-30,
-#             -30,-40,-40,-50,-50,-40,-40,-30]
+#
+# queentable =[
+#      -2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0,
+#      -1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0,
+#      -1.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0,
+#      -0.5,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5,
+#       0.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5,
+#      -1.0,  0.5,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0,
+#      -1.0,  0.0,  0.5,  0.0,  0.0,  0.0,  0.0, -1.0,
+#      -2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0]
+#
+# kingtable = [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
+#      -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
+#      -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
+#      -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
+#      -2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0,
+#      -1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0,
+#       2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0,
+#       2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0]
 
-pawntable = [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
-        5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,
-        1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0,
-        0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5,
-        0.0,  0.0,  0.0,  2.0,  2.0,  0.0,  0.0,  0.0,
-        0.5, -0.5, -1.0,  0.0,  0.0, -1.0, -0.5,  0.5,
-        0.5,  1.0, 1.0,  -2.0, -2.0,  1.0,  1.0,  0.5,
-        0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0]
-
-knightstable =[
-        -5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0,
-        -4.0, -2.0,  0.0,  0.0,  0.0,  0.0, -2.0, -4.0,
-        -3.0,  0.0,  1.0,  1.5,  1.5,  1.0,  0.0, -3.0,
-        -3.0,  0.5,  1.5,  2.0,  2.0,  1.5,  0.5, -3.0,
-        -3.0,  0.0,  1.5,  2.0,  2.0,  1.5,  0.0, -3.0,
-        -3.0,  0.5,  1.0,  1.5,  1.5,  1.0,  0.5, -3.0,
-        -4.0, -2.0,  0.0,  0.5,  0.5,  0.0, -2.0, -4.0,
-        -5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0]
-
-bishoptable = [
-     -2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0,
-     -1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0,
-     -1.0,  0.0,  0.5,  1.0,  1.0,  0.5,  0.0, -1.0,
-     -1.0,  0.5,  0.5,  1.0,  1.0,  0.5,  0.5, -1.0,
-     -1.0,  0.0,  1.0,  1.0,  1.0,  1.0,  0.0, -1.0,
-     -1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0, -1.0,
-     -1.0,  0.5,  0.0,  0.0,  0.0,  0.0,  0.5, -1.0,
-     -2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0
-]
-
-
-rooktable = [
-      0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,
-      0.5,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  0.5,
-     -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
-     -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
-     -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
-     -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
-     -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -0.5,
-      0.0,   0.0, 0.0,  0.5,  0.5,  0.0,  0.0,  0.0
-]
-
-
-queentable =[
-     -2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0,
-     -1.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0, -1.0,
-     -1.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0,
-     -0.5,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5,
-      0.0,  0.0,  0.5,  0.5,  0.5,  0.5,  0.0, -0.5,
-     -1.0,  0.5,  0.5,  0.5,  0.5,  0.5,  0.0, -1.0,
-     -1.0,  0.0,  0.5,  0.0,  0.0,  0.0,  0.0, -1.0,
-     -2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0]
-
-kingtable = [-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
-     -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
-     -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
-     -3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0,
-     -2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0,
-     -1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0,
-      2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0,
-      2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0]
-
-# pawntable = [i / 10 for i in pawntable]
-# knightstable = [i / 10 for i in knightstable]
-# bishoptable = [i / 10 for i in bishoptable]
-# rooktable = [i / 10 for i in rooktable]
-# queentable = [i / 10 for i in queentable]
-# kingtable = [i / 10 for i in kingtable]
-
-def evaluate(board):
-
-    if board.is_checkmate():
-        if board.turn:
-            return -9999
-        else:
-            return 9999
-    if board.is_stalemate():
-        return 0
-    if board.is_insufficient_material():
-        return 0
-
-    wp = len(board.pieces(chess.PAWN, chess.WHITE))
-    bp = len(board.pieces(chess.PAWN, chess.BLACK))
-    wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
-    bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
-    wb = len(board.pieces(chess.BISHOP, chess.WHITE))
-    bb = len(board.pieces(chess.BISHOP, chess.BLACK))
-    wr = len(board.pieces(chess.ROOK, chess.WHITE))
-    br = len(board.pieces(chess.ROOK, chess.BLACK))
-    wq = len(board.pieces(chess.QUEEN, chess.WHITE))
-    bq = len(board.pieces(chess.QUEEN, chess.BLACK))
-    wk = len(board.pieces(chess.KING, chess.WHITE))
-    bk = len(board.pieces(chess.KING, chess.BLACK))
-
-    material = 10*(wp-bp)+30*(wn-bn)+30*(wb-bb)+50*(wr-br)+90*(wq-bq)+900*(wk-bk)
-
-    pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
-    pawnsq= pawnsq + sum([-pawntable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.PAWN, chess.BLACK)])
-    knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-    knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.KNIGHT, chess.BLACK)])
-    bishopsq= sum([bishoptable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
-    bishopsq= bishopsq + sum([-bishoptable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.BISHOP, chess.BLACK)])
-    rooksq = sum([rooktable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
-    rooksq = rooksq + sum([-rooktable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.ROOK, chess.BLACK)])
-    queensq = sum([queentable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
-    queensq = queensq + sum([-queentable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.QUEEN, chess.BLACK)])
-    kingsq = sum([kingtable[i] for i in board.pieces(chess.KING, chess.WHITE)])
-    kingsq = kingsq + sum([-kingtable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.KING, chess.BLACK)])
-
-    eval = material + pawnsq + knightsq + bishopsq+ rooksq+ queensq + kingsq
-    return -eval
-
+pawntable = [i / 10 for i in pawntable]
+knightstable = [i / 10 for i in knightstable]
+bishoptable = [i / 10 for i in bishoptable]
+rooktable = [i / 10 for i in rooktable]
+queentable = [i / 10 for i in queentable]
+kingtable = [i / 10 for i in kingtable]
 
 # def evaluate(board):
-#     pawn = sum([pawntable[i] + 10 for i in board.pieces(chess.PAWN, chess.WHITE)])
-#     pawn += sum([-pawntable[chess.square_mirror(i)] + -10 for i in board.pieces(chess.PAWN, chess.BLACK)])
 #
-#     knight = sum([knightstable[i] + 30 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-#     knight += sum([-knightstable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+#     if board.is_checkmate():
+#         if board.turn:
+#             return -9999
+#         else:
+#             return 9999
+#     if board.is_stalemate():
+#         return 0
+#     if board.is_insufficient_material():
+#         return 0
 #
-#     bishop = sum([bishoptable[i] + 30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
-#     bishop += sum([-bishoptable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
+#     wp = len(board.pieces(chess.PAWN, chess.WHITE))
+#     bp = len(board.pieces(chess.PAWN, chess.BLACK))
+#     wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
+#     bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
+#     wb = len(board.pieces(chess.BISHOP, chess.WHITE))
+#     bb = len(board.pieces(chess.BISHOP, chess.BLACK))
+#     wr = len(board.pieces(chess.ROOK, chess.WHITE))
+#     br = len(board.pieces(chess.ROOK, chess.BLACK))
+#     wq = len(board.pieces(chess.QUEEN, chess.WHITE))
+#     bq = len(board.pieces(chess.QUEEN, chess.BLACK))
+#     wk = len(board.pieces(chess.KING, chess.WHITE))
+#     bk = len(board.pieces(chess.KING, chess.BLACK))
 #
+#     material = 10*(wp-bp)+30*(wn-bn)+30*(wb-bb)+50*(wr-br)+90*(wq-bq)+900*(wk-bk)
 #
-#     rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.WHITE)])
-#     rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.BLACK)])
+#     pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
+#     pawnsq= pawnsq + sum([-pawntable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.PAWN, chess.BLACK)])
+#     knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
+#     knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+#     bishopsq= sum([bishoptable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
+#     bishopsq= bishopsq + sum([-bishoptable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.BISHOP, chess.BLACK)])
+#     rooksq = sum([rooktable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
+#     rooksq = rooksq + sum([-rooktable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.ROOK, chess.BLACK)])
+#     queensq = sum([queentable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
+#     queensq = queensq + sum([-queentable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.QUEEN, chess.BLACK)])
+#     kingsq = sum([kingtable[i] for i in board.pieces(chess.KING, chess.WHITE)])
+#     kingsq = kingsq + sum([-kingtable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.KING, chess.BLACK)])
 #
-#     queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
-#     queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
-#
-#     king = sum([kingtable[i] + 900 for i in board.pieces(chess.KING, chess.WHITE)])
-#     king += sum([-kingtable[chess.square_mirror(i)] + -900 for i in board.pieces(chess.KING, chess.BLACK)])
-#
-#     return pawn + knight + rook + queen + king
+#     eval = material + pawnsq + knightsq + bishopsq+ rooksq+ queensq + kingsq
+#     return -eval
+
+
+def evaluate(board):
+    pawn = sum([pawntable[i] + 10 for i in board.pieces(chess.PAWN, chess.BLACK)])
+    pawn += sum([-pawntable[chess.square_mirror(i)] + -10 for i in board.pieces(chess.PAWN, chess.WHITE)])
+
+    knight = sum([knightstable[i] + 30 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+    knight += sum([-knightstable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
+
+    bishop = sum([bishoptable[i] + 30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
+    bishop += sum([-bishoptable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
+
+
+    rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.BLACK)])
+    rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.WHITE)])
+
+    queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
+    queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
+
+    king = sum([kingtable[i] + 900 for i in board.pieces(chess.KING, chess.BLACK)])
+    king += sum([-kingtable[chess.square_mirror(i)] + -900 for i in board.pieces(chess.KING, chess.WHITE)])
+
+    return pawn + knight + rook + queen + king
 
 
 # def evaluate(board):
