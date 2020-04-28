@@ -125,7 +125,7 @@ def minimax(board, depth, turn, alpha, beta):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
-    # possible_moves.reverse()
+    possible_moves.reverse()
 
 
     if (turn == 1): #MAX
@@ -139,8 +139,8 @@ def minimax(board, depth, turn, alpha, beta):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
-            if (depth == 3):
-                print("mv: ", board.san(move), " score: ", score, " max_move: ", max_move)
+            # if (depth == 3):
+            #     print("mv: ", board.san(move), " score: ", score)
 
             if score > max_score:
                 max_score = score
@@ -166,8 +166,8 @@ def minimax(board, depth, turn, alpha, beta):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
-            if (depth == 3):
-                print("mv: ", board.san(move), " score: ", score)
+            # if (depth == 3):
+            #     print("mv: ", board.san(move), " score: ", score)
 
 
             if score < min_score:
@@ -240,7 +240,7 @@ def main():
                 print("BLACK is in CHECK.")
             # print("BLACK's turn. ")
 
-            move, score = minimax(board, 3, 1, -10000, 10000)
+            move, score = minimax(board, 4, 1, -10000, 10000)
             try:
                 print("BLACK's move: ", board.san(move))
             except AttributeError:
