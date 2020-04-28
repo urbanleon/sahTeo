@@ -57,52 +57,52 @@ kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
             -30,-40,-40,-50,-50,-40,-40,-30,
             -30,-40,-40,-50,-50,-40,-40,-30]
 
-def evaluate(board):
-
-    if board.is_checkmate():
-        if board.turn:
-            return -9999
-        else:
-            return 9999
-    if board.is_stalemate():
-        return 0
-    if board.is_insufficient_material():
-        return 0
-
-    wp = len(board.pieces(chess.PAWN, chess.WHITE))
-    bp = len(board.pieces(chess.PAWN, chess.BLACK))
-    wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
-    bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
-    wb = len(board.pieces(chess.BISHOP, chess.WHITE))
-    bb = len(board.pieces(chess.BISHOP, chess.BLACK))
-    wr = len(board.pieces(chess.ROOK, chess.WHITE))
-    br = len(board.pieces(chess.ROOK, chess.BLACK))
-    wq = len(board.pieces(chess.QUEEN, chess.WHITE))
-    bq = len(board.pieces(chess.QUEEN, chess.BLACK))
-
-    material = 100*(wp-bp)+320*(wn-bn)+330*(wb-bb)+500*(wr-br)+900*(wq-bq)
-
-    pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
-    pawnsq= pawnsq + sum([-pawntable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.PAWN, chess.BLACK)])
-    knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-    knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.KNIGHT, chess.BLACK)])
-    bishopsq= sum([bishoptable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
-    bishopsq= bishopsq + sum([-bishoptable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.BISHOP, chess.BLACK)])
-    rooksq = sum([rooktable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
-    rooksq = rooksq + sum([-rooktable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.ROOK, chess.BLACK)])
-    queensq = sum([queentable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
-    queensq = queensq + sum([-queentable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.QUEEN, chess.BLACK)])
-    kingsq = sum([kingtable[i] for i in board.pieces(chess.KING, chess.WHITE)])
-    kingsq = kingsq + sum([-kingtable[chess.square_mirror(i)]
-                                    for i in board.pieces(chess.KING, chess.BLACK)])
-
-    eval = material + pawnsq + knightsq + bishopsq+ rooksq+ queensq + kingsq
-    return eval
+# def evaluate(board):
+#
+#     if board.is_checkmate():
+#         if board.turn:
+#             return -9999
+#         else:
+#             return 9999
+#     if board.is_stalemate():
+#         return 0
+#     if board.is_insufficient_material():
+#         return 0
+#
+#     wp = len(board.pieces(chess.PAWN, chess.WHITE))
+#     bp = len(board.pieces(chess.PAWN, chess.BLACK))
+#     wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
+#     bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
+#     wb = len(board.pieces(chess.BISHOP, chess.WHITE))
+#     bb = len(board.pieces(chess.BISHOP, chess.BLACK))
+#     wr = len(board.pieces(chess.ROOK, chess.WHITE))
+#     br = len(board.pieces(chess.ROOK, chess.BLACK))
+#     wq = len(board.pieces(chess.QUEEN, chess.WHITE))
+#     bq = len(board.pieces(chess.QUEEN, chess.BLACK))
+#
+#     material = 100*(wp-bp)+320*(wn-bn)+330*(wb-bb)+500*(wr-br)+900*(wq-bq)
+#
+#     pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
+#     pawnsq= pawnsq + sum([-pawntable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.PAWN, chess.BLACK)])
+#     knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
+#     knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+#     bishopsq= sum([bishoptable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
+#     bishopsq= bishopsq + sum([-bishoptable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.BISHOP, chess.BLACK)])
+#     rooksq = sum([rooktable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
+#     rooksq = rooksq + sum([-rooktable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.ROOK, chess.BLACK)])
+#     queensq = sum([queentable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
+#     queensq = queensq + sum([-queentable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.QUEEN, chess.BLACK)])
+#     kingsq = sum([kingtable[i] for i in board.pieces(chess.KING, chess.WHITE)])
+#     kingsq = kingsq + sum([-kingtable[chess.square_mirror(i)]
+#                                     for i in board.pieces(chess.KING, chess.BLACK)])
+#
+#     eval = material + pawnsq + knightsq + bishopsq+ rooksq+ queensq + kingsq
+#     return eval
 
 # def evaluate(board):
 #     pawn = sum([pawntable[i] + 100 for i in board.pieces(chess.PAWN, chess.WHITE)])
@@ -126,62 +126,81 @@ def evaluate(board):
 #
 #     return pawn + knight + rook + queen + king
 
-# def evaluate(board):
-#     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-#     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-#     fen = board.board_fen()
-#
-#     w_score = 0
-#     b_score = 0
-#
-#     for k,v in white.items():
-#         w_score += fen.count(k) * v
-#     for k,v in black.items():
-#         b_score += fen.count(k) * v
-#     return w_score + b_score
+def evaluate(board):
+
+    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
+    fen = board.board_fen()
+
+    w_score = 0
+    b_score = 0
+
+    for k,v in white.items():
+        w_score += fen.count(k) * v
+    for k,v in black.items():
+        b_score += fen.count(k) * v
+    return w_score + b_score
 
 
-def minimax(board, depth, turn):
+def minimax(board, depth, turn, alpha, beta):
     if (depth == 0):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
+    possible_moves.reverse()
 
 
-    if (turn == 1):
+    if (turn == 1): #MAX
         max_score = -9999
         max_move = None
+        # maybe change to random choice to
+        # prevent repeated moves
 
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn)
+            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
-            if score >= max_score:
+            if score > max_score:
                 max_score = score
                 max_move = move
 
+            if max_score > alpha:
+                alpha = max_score
+
+            if alpha >= beta:
+                break
+        if max_score == -9999 and possible_moves:
+            max_move = possible_moves[0]
+
         return max_move, max_score
 
-    else:
+    else: #MIN
         min_score = 9999
         min_move = None
+        # min_move = possible_moves[0]
 
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn)
+            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
 
-            if score <= min_score:
+            if score < min_score:
                 min_score = score
                 min_move = move
+
+            if min_score < beta:
+                beta = min_score
+
+            if alpha >= beta:
+                break
 
         return min_move, min_score
 
@@ -238,15 +257,20 @@ def main():
             if board.is_check():
                 print("BLACK is in CHECK.")
 
-            b_move, score = minimax(board, 3, 1)
-            print("BLACK's move: ", board.san(b_move))
+            b_move, score = minimax(board, 3, 1, -10000, 10000)
+            try:
+                print("BLACK's move: ", board.san(b_move))
+            except AttributeError:
+                print("TOMMY attribute error!!")
+                print(board.fen)
+                print("b_move: ", b_move)
             print('\n')
             # time.sleep(2)
             board.push_uci(b_move.uci())
 
         print(board.unicode(borders=True))
         print_captured(board)
-        time.sleep(1)
+        # time.sleep(1)
         # print("\n")
         turn += 1
 
@@ -263,6 +287,8 @@ def main():
         print("BLACK wins!")
     else:
         print("It's a DRAW!")
+
+    engine.quit()
 
 if __name__ == "__main__":
     main()
