@@ -22,7 +22,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 <strong>Run Instructions</strong>:
 * (Requires Python3.6 or greater)
 * Minimax:
-  * `$ python3 chess_minimax.py`
+  * `$ python3 minimax.py`
 - Minimax with Alpha-Beta Pruning:
   - `$ python3 alpha_beta.py`
 - My engine vs. Stockfish engine at lowest settings:
