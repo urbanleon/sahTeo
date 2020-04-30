@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+body, html {
+    height: 100%;
+}
+
+.board {
+    overflow: auto;
+    max-width: 600px;
+    margin: 5em auto;
+}
+
+.square {
+    float: left;
+    width: 12.5%;
+    padding-bottom: 12.5%;
+}
+
+.black {
+    background-color: rgb(60, 60, 60);
+}
+
+.white {
+    background-color: white;
+}

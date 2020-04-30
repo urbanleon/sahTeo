@@ -228,16 +228,14 @@ def main():
             if board.is_check():
                 print("BLACK is in CHECK.")
 
-            b_move, score = minimax(board, 3, 1, -10000, 10000)
+            b_move, score = minimax(board, 4, 1, -10000, 10000)
             print("BLACK's move: ", board.san(b_move))
             print('\n')
-            # time.sleep(2)
-            board.push_uci(b_move.uci())
+            board.push(b_move)
 
         print(board.unicode(borders=True))
         print_captured(board)
         # time.sleep(2)
-        # print("\n")
         turn += 1
 
     if (board.is_checkmate()):

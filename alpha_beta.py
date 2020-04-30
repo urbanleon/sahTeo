@@ -213,8 +213,6 @@ def print_captured(board):
 
 def main():
     board = chess.Board()
-    # board.set_board_fen("1nb1kqnr/r2pp1P1/1pp2p2/p7/P3P2Q/2NB1N1P/1PPB1P2/R3K2R")
-    # board.set_fen('rnb3B1/3p2b1/1pp1pp2/p2kN2p/P2P3P/BP1QPN2/2P2PP1/R3K2R b KQ - 0 1')
     turn = 0
     print(board.unicode(borders=True))
     print("\n")
