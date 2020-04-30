@@ -1,12 +1,24 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     background-color: white;
 }
 
-body, html {
+html, body {
+    margin: 0;
+    padding: 0;
     height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: white;
+    padding-top: 1px;
+}
+
+html {
+    height: 100%;
+    background-color: red;
 }
 
 .board {
@@ -16,15 +28,25 @@ body, html {
 }
 
 .square {
+    position: relative;
     float: left;
     width: 12.5%;
     padding-bottom: 12.5%;
 }
 
 .black {
-    background-color: rgb(60, 60, 60);
+    background-color: lightgray;
 }
 
 .white {
     background-color: white;
+}
+
+img {
+    background: transparent;
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    filter: drop-shadow(2px 2px 5px rgb(99, 99, 99));
+    -webkit-filter: drop-shadow(2px 2px 5px rgb(99, 99, 99));
 }
