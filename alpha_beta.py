@@ -237,7 +237,7 @@ def main():
                 print("BLACK is in CHECK.")
             # print("BLACK's turn. ")
 
-            move, score = minimax(board, 4, 1, -10000, 10000)
+            move, score = minimax(board, 3, 1, -10000, 10000)
             try:
                 print("BLACK's move: ", board.san(move))
             except AttributeError:
