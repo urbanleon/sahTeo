@@ -23,7 +23,8 @@ for (let i = 0; i < pieces.length; ++i) {
         document.addEventListener('mousemove', onMouseMove);
 
         pieces[i].onmouseup = function() {
-            dropPiece(this);
+            // dropPiece(this);
+            setTimeout(dropPiece, 50, this);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
         };
@@ -49,12 +50,10 @@ function sumOverlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
 
-    let left = squareRect.left - imgRect.left;
-    let right = squareRect.right - imgRect.right;
-    let top = squareRect.top - imgRect.top;
-    let bottom = squareRect.bottom - imgRect.bottom;
+    let left = Math.abs(squareRect.left - imgRect.left);
+    let top = Math.abs(squareRect.top - imgRect.top);
 
-    return Math.abs(left + right + top + bottom);
+    return left + top;
 }
 
 function maxOverlap(img, squares) {
@@ -77,6 +76,7 @@ function dropPiece(obj) {
     for (let i = 0; i < squares.length; i++) {
         if (overlap(obj, squares[i])) {
             possible_drops.push(squares[i]);
+            // squares[i].classList.add("possibleDrop");
         }
     }
 
