@@ -1,5 +1,5 @@
 var pieces = document.querySelectorAll("img");
-var squares = document.querySelectorAll("div");
+var squares = document.querySelectorAll("div .square");
 
 for (let i = 0; i < pieces.length; ++i) {  
 
@@ -23,6 +23,7 @@ for (let i = 0; i < pieces.length; ++i) {
         document.addEventListener('mousemove', onMouseMove);
 
         pieces[i].onmouseup = function() {
+            dropPiece(this);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
         };
@@ -32,4 +33,57 @@ for (let i = 0; i < pieces.length; ++i) {
 function moveAt(pageX, pageY, obj) {
     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
+}
+
+function overlap(img, square) {
+    let imgRect = img.getBoundingClientRect();
+    let squareRect = square.getBoundingClientRect();
+
+    return !(imgRect.right < squareRect.left ||
+             imgRect.left > squareRect.right ||
+             imgRect.bottom < squareRect.top ||
+             imgRect.top > squareRect.bottom);
+}
+
+function sumOverlap(img, square) {
+    let imgRect = img.getBoundingClientRect();
+    let squareRect = square.getBoundingClientRect();
+
+    let left = squareRect.left - imgRect.left;
+    let right = squareRect.right - imgRect.right;
+    let top = squareRect.top - imgRect.top;
+    let bottom = squareRect.bottom - imgRect.bottom;
+
+    return Math.abs(left + right + top + bottom);
+}
+
+function maxOverlap(img, squares) {
+    let minIndex = 0;
+    let minSum = 9999;
+    for (let i = 0; i < squares.length; i++) {
+        let temp = sumOverlap(img, squares[i])
+        if (temp < minSum) {
+            minSum = temp;
+            minIndex = i;
+        }
+    }
+
+    return squares[minIndex];
+}
+
+function dropPiece(obj) {
+    let possible_drops = [];
+
+    for (let i = 0; i < squares.length; i++) {
+        if (overlap(obj, squares[i])) {
+            possible_drops.push(squares[i]);
+        }
+    }
+
+    let closestDrop = maxOverlap(obj, possible_drops);
+
+    closestDrop.append(obj);
+
+    obj.style.top = 0;
+    obj.style.left = 0;
 }
