@@ -45,6 +45,7 @@ function overlap(img, square) {
              imgRect.top > squareRect.bottom);
 }
 
+//find the overlap between the image and a given square
 function sumOverlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
@@ -55,6 +56,7 @@ function sumOverlap(img, square) {
     return left + top;
 }
 
+//finds which square a piece overlaps the most with
 function maxOverlap(img, squares) {
     let minIndex = 0;
     let minSum = 9999;
@@ -69,6 +71,7 @@ function maxOverlap(img, squares) {
     return squares[minIndex];
 }
 
+//handler for dropping a piece on a square
 function dropPiece(obj) {
     let possible_drops = [];
 
