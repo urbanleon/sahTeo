@@ -23,8 +23,7 @@ for (let i = 0; i < pieces.length; ++i) {
         document.addEventListener('mousemove', onMouseMove);
 
         pieces[i].onmouseup = function() {
-            // dropPiece(this);
-            setTimeout(dropPiece, 50, this);
+            dropPiece(this);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
         };
@@ -76,7 +75,6 @@ function dropPiece(obj) {
     for (let i = 0; i < squares.length; i++) {
         if (overlap(obj, squares[i])) {
             possible_drops.push(squares[i]);
-            // squares[i].classList.add("possibleDrop");
         }
     }
 

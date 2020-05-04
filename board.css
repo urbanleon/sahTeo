@@ -37,7 +37,6 @@ html {
 }
 
 img {
-    border: 1px solid red;
     background: transparent;
     position: absolute;
     max-width: 100%;
