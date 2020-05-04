@@ -30,11 +30,13 @@ for (let i = 0; i < pieces.length; ++i) {
     };
 }
 
+//image follows position of cursor
 function moveAt(pageX, pageY, obj) {
     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
 }
 
+//detects if two objects are overlapping returns boolean
 function overlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
