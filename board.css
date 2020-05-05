@@ -19,6 +19,14 @@ html {
     overflow: auto;
     max-width: 600px;
     margin: 5em auto;
+
+    /* prevents text highlighting */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none; 
+            user-select: none;
 }
 
 .square {
