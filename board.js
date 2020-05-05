@@ -1,6 +1,8 @@
 var pieces = document.querySelectorAll("img");
 var squares = document.querySelectorAll("div .square");
 
+var chess = new Chess();
+
 for (let i = 0; i < pieces.length; ++i) {  
 
     //disable native drag event
@@ -21,7 +23,7 @@ for (let i = 0; i < pieces.length; ++i) {
         }
         
         document.addEventListener('mousemove', onMouseMove);
-
+        
         pieces[i].onmouseup = function() {
             dropPiece(this);
             document.removeEventListener('mousemove', onMouseMove);
@@ -41,10 +43,10 @@ function overlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
 
-    return !(imgRect.right < squareRect.left ||
-             imgRect.left > squareRect.right ||
-             imgRect.bottom < squareRect.top ||
-             imgRect.top > squareRect.bottom);
+    return !(imgRect.right <= squareRect.left ||
+             imgRect.left >= squareRect.right ||
+             imgRect.bottom <= squareRect.top ||
+             imgRect.top >= squareRect.bottom);
 }
 
 //find the overlap between the image and a given square
