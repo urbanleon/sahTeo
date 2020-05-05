@@ -74,6 +74,8 @@ function maxOverlap(img, squares) {
 }
 
 //handler for dropping a piece on a square
+//FIXME: if there are no possible drops, 
+// drop in last position
 function dropPiece(obj) {
     let possible_drops = [];
 
