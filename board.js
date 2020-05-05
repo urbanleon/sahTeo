@@ -85,10 +85,12 @@ function dropPiece(obj) {
         }
     }
 
-    let closestDrop = maxOverlap(obj, possible_drops);
+    if (possible_drops.length != 0) {
+        let closestDrop = maxOverlap(obj, possible_drops);
 
-    closestDrop.append(obj);
-
-    obj.style.top = 0;
-    obj.style.left = 0;
+        closestDrop.append(obj);
+        
+        obj.style.top = 0;
+        obj.style.left = 0;
+    }
 }
