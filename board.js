@@ -31,12 +31,12 @@ for (let i = 0; i < pieces.length; ++i) {
         };
 
         let currSquare = maxOverlap(this, potentialDrops(this));
-        let tempMove = {square: currSquare.id};
+        let tempMove = {square: currSquare.id, verbose: true};
         let validMoves = chess.moves(tempMove);
         console.log(validMoves);
         for (let j = 0; j < squares.length; j++) {
             for (let k = 0; k < validMoves.length; k++) {
-                if (squares[j].id == validMoves[k]) {
+                if (squares[j].id == validMoves[k].to) {
                     let addClass = squares[j].classList[0] == "black" ? "validBlack" : "validWhite";
                     squares[j].classList.add(addClass);
                 }
