@@ -116,6 +116,7 @@ function potentialDrops(obj) {
 
 //handler for dropping a piece on a square
 //FIXME: remove pieces that get captured
+//FIXME: pieces get stuck when moved off board
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
     let dropSquare = currSquare.id;
@@ -128,7 +129,6 @@ function dropPiece(piece, currSquare, validMoves) {
                 isValid = true;
             }
         }
-        console.log("isValid: " + isValid);
         if (isValid) {
             closestDrop.append(piece);
             dropSquare = closestDrop.id;
@@ -146,7 +146,7 @@ function dropPiece(piece, currSquare, validMoves) {
         squares[i].classList.remove("validBlack");        
     }
 
-    //push move
+    //push move onto stack
     let tempMove = {from: currSquare.id, to: dropSquare};
     chess.move(tempMove);
 }
