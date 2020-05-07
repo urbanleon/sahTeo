@@ -23,29 +23,38 @@ for (let i = 0; i < pieces.length; ++i) {
         }
 
         document.addEventListener('mousemove', onMouseMove);
-        
+
+        let currSquare = maxOverlap(this, potentialDrops(this));
+        let validMoves = getValidMoves(this);
+
         pieces[i].onmouseup = function() {
-            dropPiece(this);
+            dropPiece(this, currSquare, validMoves);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
         };
 
-        validMoves(this);
+        highlightValidMoves(this);
     };
 }
 
-function validMoves(piece) {
+function getValidMoves(piece) {
     let currSquare = maxOverlap(piece, potentialDrops(piece));
-        let tempMove = {square: currSquare.id, verbose: true};
-        let validMoves = chess.moves(tempMove);
-        for (let j = 0; j < squares.length; j++) {
-            for (let k = 0; k < validMoves.length; k++) {
-                if (squares[j].id == validMoves[k].to) {
-                    let addClass = squares[j].classList[0] == "black" ? "validBlack" : "validWhite";
-                    squares[j].classList.add(addClass);
-                }
+    let tempMove = {square: currSquare.id, verbose: true};
+    let validPositions = chess.moves(tempMove);
+    return validPositions;
+}
+
+function highlightValidMoves(piece) {
+    let validMoves = getValidMoves(piece);
+
+    for (let j = 0; j < squares.length; j++) {
+        for (let k = 0; k < validMoves.length; k++) {
+            if (squares[j].id === validMoves[k].to) {
+                let highlight = squares[j].classList[0] === "black" ? "validBlack" : "validWhite";
+                squares[j].classList.add(highlight);
             }
         }
+    }
 }
 
 //image follows position of cursor
@@ -65,7 +74,8 @@ function overlap(img, square) {
              imgRect.top >= squareRect.bottom);
 }
 
-//find the overlap between the image and a given square
+//find the overlap amount between the image and a given square
+//sum across both dimensions
 function sumOverlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
@@ -91,6 +101,8 @@ function maxOverlap(img, squares) {
     return squares[minIndex];
 }
 
+//returns the squares that the current piece
+//overlaps
 function potentialDrops(obj) {
     let dropZones = [];
     for (let i = 0; i < squares.length; i++) {
@@ -103,19 +115,31 @@ function potentialDrops(obj) {
 }
 
 //handler for dropping a piece on a square
-//FIXME: if there are no possible drops, 
-// drop in last position
-function dropPiece(obj) {
-    let possible_drops = potentialDrops(obj);
+//FIXME: push move onto chess move stack
+function dropPiece(piece, currSquare, validMoves) {
+    let possibleDrops = potentialDrops(piece);
+    console.log(validMoves);
+    if (possibleDrops.length != 0) {
+        let closestDrop = maxOverlap(piece, possibleDrops);
+        let isValid = false;
 
-    if (possible_drops.length != 0) {
-        let closestDrop = maxOverlap(obj, possible_drops);
-
-        closestDrop.append(obj);
+        for (let i = 0; i < validMoves.length; i++) {
+            if (closestDrop.id === validMoves[i].to) {
+                isValid = true;
+            }
+        }
+        console.log("isValid: " + isValid);
+        if (isValid) {
+            closestDrop.append(piece);
+        }
+        else {
+            currSquare.append(piece);
+        }
         
-        obj.style.top = 0;
-        obj.style.left = 0;
+        piece.style.top = 0;
+        piece.style.left = 0;
     }
+    //remove highlights
     for (let i = 0; i < squares.length; i++) {
         squares[i].classList.remove("validWhite");
         squares[i].classList.remove("validBlack");        
