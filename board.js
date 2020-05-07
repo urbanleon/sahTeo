@@ -117,6 +117,7 @@ function potentialDrops(obj) {
 //handler for dropping a piece on a square
 //FIXME: remove pieces that get captured
 //FIXME: pieces get stuck when moved off board
+//FIXME: promotions
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
     let dropSquare = currSquare.id;
@@ -129,17 +130,29 @@ function dropPiece(piece, currSquare, validMoves) {
                 isValid = true;
             }
         }
+
+        //return to original square if invalid
         if (isValid) {
+            if (closestDrop.firstChild) {
+                closestDrop.removeChild(closestDrop.firstChild);
+            }
             closestDrop.append(piece);
             dropSquare = closestDrop.id;
         }
         else {
+            if (currSquare.firstChild) {
+                currSquare.removeChild(currSquare.firstChild);
+            }
             currSquare.append(piece);
         }
         
-        piece.style.top = 0;
-        piece.style.left = 0;
     }
+    else {
+        currSquare.append(piece);
+    }
+    
+    piece.style.top = 0;
+    piece.style.left = 0;
     //remove highlights
     for (let i = 0; i < squares.length; i++) {
         squares[i].classList.remove("validWhite");
@@ -148,5 +161,7 @@ function dropPiece(piece, currSquare, validMoves) {
 
     //push move onto stack
     let tempMove = {from: currSquare.id, to: dropSquare};
+    //check for promotion
     chess.move(tempMove);
+    document.getElementById("fen").textContent = chess.ascii();
 }
