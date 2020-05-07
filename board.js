@@ -30,10 +30,14 @@ for (let i = 0; i < pieces.length; ++i) {
             this.onmouseup = null;
         };
 
-        let currSquare = maxOverlap(this, potentialDrops(this));
+        validMoves(this);
+    };
+}
+
+function validMoves(piece) {
+    let currSquare = maxOverlap(piece, potentialDrops(piece));
         let tempMove = {square: currSquare.id, verbose: true};
         let validMoves = chess.moves(tempMove);
-        console.log(validMoves);
         for (let j = 0; j < squares.length; j++) {
             for (let k = 0; k < validMoves.length; k++) {
                 if (squares[j].id == validMoves[k].to) {
@@ -42,7 +46,6 @@ for (let i = 0; i < pieces.length; ++i) {
                 }
             }
         }
-    };
 }
 
 //image follows position of cursor
