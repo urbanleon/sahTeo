@@ -44,6 +44,14 @@ html {
     background-color: white;
 }
 
+.validWhite {
+    background-color: rgba(128, 211, 128, 0.3);
+}
+
+.validBlack {
+    background-color: rgb(170,211,170);
+}
+
 img {
     background: transparent;
     position: absolute;

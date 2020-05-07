@@ -21,7 +21,7 @@ for (let i = 0; i < pieces.length; ++i) {
         function onMouseMove(event) {
             moveAt(event.pageX, event.pageY, pieces[i]);
         }
-        
+
         document.addEventListener('mousemove', onMouseMove);
         
         pieces[i].onmouseup = function() {
@@ -29,6 +29,19 @@ for (let i = 0; i < pieces.length; ++i) {
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
         };
+
+        let currSquare = maxOverlap(this, potentialDrops(this));
+        let tempMove = {square: currSquare.id};
+        let validMoves = chess.moves(tempMove);
+        console.log(validMoves);
+        for (let j = 0; j < squares.length; j++) {
+            for (let k = 0; k < validMoves.length; k++) {
+                if (squares[j].id == validMoves[k]) {
+                    let addClass = squares[j].classList[0] == "black" ? "validBlack" : "validWhite";
+                    squares[j].classList.add(addClass);
+                }
+            }
+        }
     };
 }
 
@@ -75,17 +88,22 @@ function maxOverlap(img, squares) {
     return squares[minIndex];
 }
 
+function potentialDrops(obj) {
+    let dropZones = [];
+    for (let i = 0; i < squares.length; i++) {
+        if (overlap(obj, squares[i])) {
+            dropZones.push(squares[i]);
+        }
+    }
+    
+    return dropZones;
+}
+
 //handler for dropping a piece on a square
 //FIXME: if there are no possible drops, 
 // drop in last position
 function dropPiece(obj) {
-    let possible_drops = [];
-
-    for (let i = 0; i < squares.length; i++) {
-        if (overlap(obj, squares[i])) {
-            possible_drops.push(squares[i]);
-        }
-    }
+    let possible_drops = potentialDrops(obj);
 
     if (possible_drops.length != 0) {
         let closestDrop = maxOverlap(obj, possible_drops);
@@ -94,5 +112,9 @@ function dropPiece(obj) {
         
         obj.style.top = 0;
         obj.style.left = 0;
+    }
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].classList.remove("validWhite");
+        squares[i].classList.remove("validBlack");        
     }
 }
