@@ -27,7 +27,7 @@ for (let i = 0; i < pieces.length; ++i) {
         let currSquare = maxOverlap(this, potentialDrops(this));
         let validMoves = getValidMoves(this);
 
-        pieces[i].onmouseup = function() {
+        this.onmouseup = function() {
             dropPiece(this, currSquare, validMoves);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
@@ -115,10 +115,10 @@ function potentialDrops(obj) {
 }
 
 //handler for dropping a piece on a square
-//FIXME: push move onto chess move stack
+//FIXME: remove pieces that get captured
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
-    console.log(validMoves);
+    let dropSquare = currSquare.id;
     if (possibleDrops.length != 0) {
         let closestDrop = maxOverlap(piece, possibleDrops);
         let isValid = false;
@@ -131,6 +131,7 @@ function dropPiece(piece, currSquare, validMoves) {
         console.log("isValid: " + isValid);
         if (isValid) {
             closestDrop.append(piece);
+            dropSquare = closestDrop.id;
         }
         else {
             currSquare.append(piece);
@@ -144,4 +145,8 @@ function dropPiece(piece, currSquare, validMoves) {
         squares[i].classList.remove("validWhite");
         squares[i].classList.remove("validBlack");        
     }
+
+    //push move
+    let tempMove = {from: currSquare.id, to: dropSquare};
+    chess.move(tempMove);
 }
