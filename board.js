@@ -115,9 +115,7 @@ function potentialDrops(obj) {
 }
 
 //handler for dropping a piece on a square
-//FIXME: remove pieces that get captured
-//FIXME: pieces get stuck when moved off board
-//FIXME: promotions
+//FIXME: remove piece from en passant
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
     let dropSquare = currSquare.id;
@@ -177,5 +175,8 @@ function dropPiece(piece, currSquare, validMoves) {
     }
 
     chess.move(tempMove);
-    document.getElementById("fen").textContent = chess.ascii();
+    // document.getElementById("fen").textContent = chess.ascii();
+    if (chess.in_checkmate()) {
+        document.getElementById("result").textContent = "CHECKMATE";
+    }
 }
