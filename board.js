@@ -121,6 +121,8 @@ function potentialDrops(obj) {
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
     let dropSquare = currSquare.id;
+    let chosenMove = null;
+    
     if (possibleDrops.length != 0) {
         let closestDrop = maxOverlap(piece, possibleDrops);
         let isValid = false;
@@ -128,11 +130,14 @@ function dropPiece(piece, currSquare, validMoves) {
         for (let i = 0; i < validMoves.length; i++) {
             if (closestDrop.id === validMoves[i].to) {
                 isValid = true;
+                //save chosen move to check for promotion
+                chosenMove = validMoves[i];
             }
         }
 
         //return to original square if invalid
         if (isValid) {
+            //if an image is already present, this indicates a capture
             if (closestDrop.firstChild) {
                 closestDrop.removeChild(closestDrop.firstChild);
             }
@@ -150,9 +155,10 @@ function dropPiece(piece, currSquare, validMoves) {
     else {
         currSquare.append(piece);
     }
-    
+
     piece.style.top = 0;
     piece.style.left = 0;
+
     //remove highlights
     for (let i = 0; i < squares.length; i++) {
         squares[i].classList.remove("validWhite");
@@ -162,6 +168,14 @@ function dropPiece(piece, currSquare, validMoves) {
     //push move onto stack
     let tempMove = {from: currSquare.id, to: dropSquare};
     //check for promotion
+    if (chosenMove) {
+        let isPromotion = chosenMove.flags.indexOf('p');
+        if (isPromotion != -1) {
+            tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
+            piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png";
+        }
+    }
+
     chess.move(tempMove);
     document.getElementById("fen").textContent = chess.ascii();
 }
