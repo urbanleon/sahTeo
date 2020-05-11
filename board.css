@@ -3,16 +3,39 @@
     background-color: white;
 }
 
-body {
-    margin: 0;
-    height: 100%;
-    background-color: white;
-    padding-top: 1px;
-}
-
 html {
     height: 100%;
     background-color: white;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    /* background-color: white; */
+    padding-top: 1px;
+
+
+    /* #92FE9D, #00C9FF */
+    /* #43cea2, #185a9d */
+    /* #abbaab, #ffffff */
+
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+img {
+    background: transparent;
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    /* filter: drop-shadow(0 0 5px rgba(0, 0, 0, )); */
+    /* -webkit-filter: drop-shadow(2px 2px 5px rgb(99, 99, 99)); */
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
+
+    -webkit-filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
 }
 
 .board {
@@ -50,18 +73,6 @@ html {
 
 .validBlack {
     background-color: rgb(170,211,170);
-}
-
-img {
-    background: transparent;
-    position: absolute;
-    max-width: 100%;
-    max-height: 100%;
-    /* filter: drop-shadow(0 0 5px rgba(0, 0, 0, )); */
-    /* -webkit-filter: drop-shadow(2px 2px 5px rgb(99, 99, 99)); */
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
-
-    -webkit-filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
 }
 
 #result {
