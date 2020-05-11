@@ -132,6 +132,37 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
     return tempMove;
 }
 
+function removeHighlights() {
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].classList.remove("validWhite");
+        squares[i].classList.remove("validBlack");        
+    }
+}
+
+function resetPosition(piece) {
+    piece.style.top = 0;
+    piece.style.left = 0;
+}
+
+function revertPosition(isValid, closestDrop, currSquare, piece) {
+    let dropSquare = currSquare.id;
+    if (isValid) {
+        //if an image is already present, this indicates a capture
+        if (closestDrop.firstChild) {
+            closestDrop.removeChild(closestDrop.firstChild);
+        }
+        closestDrop.append(piece);
+        dropSquare = closestDrop.id;
+    }
+    else {
+        if (currSquare.firstChild) {
+            currSquare.removeChild(currSquare.firstChild);
+        }
+        currSquare.append(piece);
+    }
+    return dropSquare
+}
+
 //handler for dropping a piece on a square
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
@@ -151,39 +182,21 @@ function dropPiece(piece, currSquare, validMoves) {
         }
 
         //return to original square if invalid
-        if (isValid) {
-            //if an image is already present, this indicates a capture
-            if (closestDrop.firstChild) {
-                closestDrop.removeChild(closestDrop.firstChild);
-            }
-            closestDrop.append(piece);
-            dropSquare = closestDrop.id;
-        }
-        else {
-            if (currSquare.firstChild) {
-                currSquare.removeChild(currSquare.firstChild);
-            }
-            currSquare.append(piece);
-        }
+        dropSquare = revertPosition(isValid, closestDrop, currSquare, piece);
         
     }
     else {
         currSquare.append(piece);
     }
 
-    piece.style.top = 0;
-    piece.style.left = 0;
-
-    //remove highlights
-    for (let i = 0; i < squares.length; i++) {
-        squares[i].classList.remove("validWhite");
-        squares[i].classList.remove("validBlack");        
-    }
+    resetPosition(piece);
+    removeHighlights();
 
     let tempMove = checkSpecialMoves(currSquare, chosenMove, dropSquare, piece);
 
     chess.move(tempMove);
     document.getElementById("fen").textContent = chess.ascii();
+    
     if (chess.in_checkmate()) {
         document.getElementById("result").textContent = "CHECKMATE";
     }
