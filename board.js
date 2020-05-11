@@ -195,8 +195,8 @@ function dropPiece(piece, currSquare, validMoves) {
     let tempMove = checkSpecialMoves(currSquare, chosenMove, dropSquare, piece);
 
     chess.move(tempMove);
-    document.getElementById("fen").textContent = chess.ascii();
-    
+    // document.getElementById("fen").textContent = chess.ascii();
+
     if (chess.in_checkmate()) {
         document.getElementById("result").textContent = "CHECKMATE";
     }
