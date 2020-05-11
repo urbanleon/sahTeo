@@ -114,8 +114,25 @@ function potentialDrops(obj) {
     return dropZones;
 }
 
+function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
+    let tempMove = {from: currSquare.id, to: dropSquare};
+    if (chosenMove) {
+        let isPromotion = chosenMove.flags.indexOf('p');
+        let isEnPassant = chosenMove.flags.indexOf('e');
+        if (isPromotion != -1) {
+            tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
+            piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png";
+        }
+        if (isEnPassant != -1) {
+            let capturedId = chosenMove.to[0] + chosenMove.from[1];
+            let capturedSquare = document.getElementById(capturedId);
+            capturedSquare.removeChild(capturedSquare.firstChild);
+        }
+    }
+    return tempMove;
+}
+
 //handler for dropping a piece on a square
-//FIXME: remove piece from en passant
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
     let dropSquare = currSquare.id;
@@ -163,22 +180,7 @@ function dropPiece(piece, currSquare, validMoves) {
         squares[i].classList.remove("validBlack");        
     }
 
-    //push move onto stack
-    let tempMove = {from: currSquare.id, to: dropSquare};
-    //check for promotion and en passant
-    if (chosenMove) {
-        let isPromotion = chosenMove.flags.indexOf('p');
-        let isEnPassant = chosenMove.flags.indexOf('e');
-        if (isPromotion != -1) {
-            tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
-            piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png";
-        }
-        if (isEnPassant != -1) {
-            let capturedId = chosenMove.to[0] + chosenMove.from[1];
-            let capturedSquare = document.getElementById(capturedId);
-            capturedSquare.removeChild(capturedSquare.firstChild);
-        }
-    }
+    let tempMove = checkSpecialMoves(currSquare, chosenMove, dropSquare, piece);
 
     chess.move(tempMove);
     document.getElementById("fen").textContent = chess.ascii();
