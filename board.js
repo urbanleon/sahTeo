@@ -165,17 +165,23 @@ function dropPiece(piece, currSquare, validMoves) {
 
     //push move onto stack
     let tempMove = {from: currSquare.id, to: dropSquare};
-    //check for promotion
+    //check for promotion and en passant
     if (chosenMove) {
         let isPromotion = chosenMove.flags.indexOf('p');
+        let isEnPassant = chosenMove.flags.indexOf('e');
         if (isPromotion != -1) {
             tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
             piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png";
         }
+        if (isEnPassant != -1) {
+            let capturedId = chosenMove.to[0] + chosenMove.from[1];
+            let capturedSquare = document.getElementById(capturedId);
+            capturedSquare.removeChild(capturedSquare.firstChild);
+        }
     }
 
     chess.move(tempMove);
-    // document.getElementById("fen").textContent = chess.ascii();
+    document.getElementById("fen").textContent = chess.ascii();
     if (chess.in_checkmate()) {
         document.getElementById("result").textContent = "CHECKMATE";
     }
