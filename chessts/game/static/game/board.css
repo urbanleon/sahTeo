@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    /* background-color: white; */
+}
+
+html {
+    max-height: 100%;
+    /* background-color: white; */
+}
+
+body {
+    margin: 0;
+    max-height: 100%;
+    /* background-color: white; */
+    padding-top: 1px;
+
+    /* #eef2f3, #8e9eab original */
+    /* #92FE9D, #00C9FF */
+    /* #43cea2, #185a9d */
+    /* #abbaab, #ffffff */
+
+    background: #8e9eab; 
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab); 
+    background: linear-gradient(to right, #43cea2, #185a9d); 
+}
+
+img {
+    background: transparent;
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    /* filter: drop-shadow(0 0 5px rgba(0, 0, 0, )); */
+    /* -webkit-filter: drop-shadow(2px 2px 5px rgb(99, 99, 99)); */
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
+
+    -webkit-filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
+}
+
+.board {
+    overflow: auto;
+    max-width: 600px;
+    margin: 5em auto auto;
+    border-radius: 2px;
+    /* prevents text highlighting */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none; 
+            user-select: none;
+}
+
+.square {
+    position: relative;
+    float: left;
+    width: 12.5%;
+    padding-bottom: 12.5%;
+}
+
+.black {
+    /* background-color: lightgray; */
+    background-color: rgba(211,211,211,0.5);
+}
+
+.white {
+    /* background-color: white; */
+    background-color: rgba(255,255,255,0.5);
+}
+
+.validWhite {
+    /* background-color: rgba(128, 211, 128, 0.3); */
+    /* background-color: #d8f2da; */
+    background-color: rgb(216,242,218);
+}
+
+.validBlack {
+    background-color: rgb(170,211,170);
+}
+
+#result {
+    text-align: center;
+    transition: opacity 1s;
+}
+
+#fen {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    text-align: center;
+}
+
+/* move up board for smaller screens */
+@media (min-width: 992px) { 
+    .board {
+        margin: 10em auto auto;
+    }
+}
