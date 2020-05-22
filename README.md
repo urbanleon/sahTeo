@@ -15,7 +15,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 
 <strong>Dependencies</strong>:
 * Python-chess (included) : https://python-chess.readthedocs.io/en/latest/#
-  * includes modified board printout 
+  * uses modified board printout 
 * Stockfish engine in `/usr/games/` (if using `minimax_stockfish.py`)
   * Can modify `minimax_stockfish.py` to look for stockfish in custom directory 
 ***
