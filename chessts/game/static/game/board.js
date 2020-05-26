@@ -82,7 +82,7 @@ function sumOverlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
 
-    //minus 1 because borders touch, creates ambiguous click, caused
+    //minus 1 because shared borders cause ambiguous click, which caused
     //bottom and right piece to replace adjacent piece of same color
     let left = Math.abs((squareRect.left - 1) - imgRect.left);
     let top = Math.abs((squareRect.top - 1) - imgRect.top);
