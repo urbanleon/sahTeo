@@ -31,4 +31,3 @@ My current evaluation function is a weighted sum based on the relative strength 
 <strong>Known Bugs</strong>:
 - Mouse-up event does not register when pieces dragged outside viewport, resulting in unwanted behavior
   - will try limiting piece movement to board edges
-- Clicking on border between pieces of same color (about 1px left/above border) will replace piece 
