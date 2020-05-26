@@ -7,8 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def play(request):
-    # return HttpResponse("Hello, world! You're at the game index.")
-    # data = request.body
+    #FIX ME: change getMove route to this to check if request.method == "POST"
     return render(request, 'game/board.html')
 
 @csrf_exempt
