@@ -1,6 +1,8 @@
 var pieces = document.querySelectorAll("img");
 var squares = document.querySelectorAll("div .square");
 
+var pos = document.getElementById("position");
+
 var chess = new Chess();
 
 for (let i = 0; i < pieces.length; ++i) {  
@@ -80,8 +82,10 @@ function sumOverlap(img, square) {
     let imgRect = img.getBoundingClientRect();
     let squareRect = square.getBoundingClientRect();
 
-    let left = Math.abs(squareRect.left - imgRect.left);
-    let top = Math.abs(squareRect.top - imgRect.top);
+    //minus 1 because borders touch, creates ambiguous click, caused
+    //bottom and right piece to replace adjacent piece of same color
+    let left = Math.abs((squareRect.left - 1) - imgRect.left);
+    let top = Math.abs((squareRect.top - 1) - imgRect.top);
 
     return left + top;
 }
@@ -114,6 +118,7 @@ function potentialDrops(obj) {
     return dropZones;
 }
 
+//FIXME: check color of promoted piece
 function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
     let tempMove = {from: currSquare.id, to: dropSquare};
     if (chosenMove) {
