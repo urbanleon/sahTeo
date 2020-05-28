@@ -120,7 +120,7 @@ def evaluate(board):
 #     return w_score + b_score
 
 
-def minimax(board, depth, turn, alpha, beta):
+def minimax(board, depth, is_maximizing, alpha, beta):
     if (depth == 0):
         return None, evaluate(board)
 
@@ -128,7 +128,7 @@ def minimax(board, depth, turn, alpha, beta):
     possible_moves.reverse()
 
 
-    if (turn == 1): #MAX
+    if (is_maximizing == 1): #MAX
         max_score = -9999
         max_move = None
         # maybe change to random choice to
@@ -137,7 +137,7 @@ def minimax(board, depth, turn, alpha, beta):
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
+            (_, score) = minimax(temp_board, depth - 1, not is_maximizing, alpha, beta)
 
             # if (depth == 3):
             #     print("mv: ", board.san(move), " score: ", score)
@@ -167,7 +167,7 @@ def minimax(board, depth, turn, alpha, beta):
         for move in possible_moves:
             temp_board = board.copy()
             temp_board.push(move)
-            (_, score) = minimax(temp_board, depth - 1, not turn, alpha, beta)
+            (_, score) = minimax(temp_board, depth - 1, not is_maximizing, alpha, beta)
 
             if score < min_score:
                 min_score = score
