@@ -90,7 +90,8 @@ img {
     transition: opacity 1s;
 }
 
-#fen {
+#bestMove {
+    margin: 5em auto;
     font-family: 'Courier New', Courier, monospace;
     white-space: pre-wrap;
     text-align: center;

@@ -5,6 +5,8 @@ var pos = document.getElementById("position");
 
 var chess = new Chess();
 
+let bestMove = document.getElementById("bestMove");
+
 for (let i = 0; i < pieces.length; ++i) {  
 
     //disable native drag event
@@ -168,6 +170,16 @@ function revertPosition(isValid, closestDrop, currSquare, piece) {
     return dropSquare
 }
 
+function sendFen() {
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        bestMove.textContent = xhr.responseText;
+    }
+    xhr.open("POST", "http://127.0.0.1:8000/", true);
+    let fen = chess.fen();
+    xhr.send(JSON.stringify({value: fen}));
+}
+
 //handler for dropping a piece on a square
 function dropPiece(piece, currSquare, validMoves) {
     let possibleDrops = potentialDrops(piece);
@@ -201,6 +213,13 @@ function dropPiece(piece, currSquare, validMoves) {
 
     chess.move(tempMove);
     // document.getElementById("fen").textContent = chess.ascii();
+
+    if (chess.turn() == 'b') {
+        sendFen();
+    }
+    else {
+        bestMove.textContent = "";
+    }
 
     if (chess.in_checkmate()) {
         document.getElementById("result").textContent = "CHECKMATE";
