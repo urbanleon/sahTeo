@@ -5,7 +5,7 @@ var pos = document.getElementById("position");
 
 var chess = new Chess();
 
-let bestMove = document.getElementById("bestMove");
+// let bestMove = document.getElementById("bestMove");
 
 //FIXME: black captures white
 //FIXME: vertical movements not caught because only checks posX for clearInterval
@@ -13,7 +13,7 @@ let bestMove = document.getElementById("bestMove");
 function moveBot(move) {
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
-    bestMove.textContent = 'from: ' + mvFrom + ' to: ' + mvTo;
+    // bestMove.textContent = 'from: ' + mvFrom + ' to: ' + mvTo;
 
     //get elements with id's of sqfrom and sqto
     let sqFrom = document.getElementById(mvFrom);
@@ -34,10 +34,10 @@ function moveBot(move) {
     if (diffX < 0 || (diffX < 0 && diffY < 0)) {
         angle = Math.PI - angle * -1;
     }
-    console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + (angle * 180 / Math.PI));
+    // console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + (angle * 180 / Math.PI));
     //animate piece
-    let id = setInterval(frame, 5);
-    let speed = 10;
+    let id = setInterval(frame, 15);
+    let speed = 30;
     let posX = 0;
     let posY = 0;
     function frame() {
@@ -59,7 +59,7 @@ function moveBot(move) {
         } else {
             posX += speed * Math.cos(angle);
             posY += speed * Math.sin(angle);
-            document.getElementById("pos").textContent = Math.floor(posX) + ' ' + Math.floor(posY);
+            // document.getElementById("pos").textContent = Math.floor(posX) + ' ' + Math.floor(posY);
             mvPiece.style.left = posX + 'px';
             mvPiece.style.top = posY + 'px';
         }
@@ -70,7 +70,7 @@ function moveBot(move) {
 let xhr = new XMLHttpRequest();
 xhr.onload = function() {
     let move = xhr.responseText
-    bestMove.textContent = move;
+    // bestMove.textContent = move;
     moveBot(move);
 }
 
