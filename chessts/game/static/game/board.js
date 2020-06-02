@@ -19,12 +19,10 @@ function moveBot(move) {
     let sqFrom = document.getElementById(mvFrom);
     let sqTo = document.getElementById(mvTo);
     let mvPiece = sqFrom.firstChild;
-    console.log(mvPiece);
+
     //get positions of those elements
     let startPos = sqFrom.getBoundingClientRect();
     let endPos = sqTo.getBoundingClientRect();
-    console.log(startPos);
-    console.log(endPos);
 
     //set element zIndex to 1
     mvPiece.style.zIndex = 1;
@@ -33,27 +31,31 @@ function moveBot(move) {
     let diffX = endPos.x - startPos.x;
     let diffY = endPos.y - startPos.y;
     let angle = Math.atan(diffY / diffX);
-    if (diffX < 0 && diffY < 0) {
+    if (diffX < 0 || (diffX < 0 && diffY < 0)) {
         angle = Math.PI - angle * -1;
     }
     console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + (angle * 180 / Math.PI));
     //animate piece
     let id = setInterval(frame, 5);
     let speed = 10;
-    // let posX = mvPiece.getBoundingClientRect().x;
-    // let posY = mvPiece.getBoundingClientRect().y;
     let posX = 0;
     let posY = 0;
     function frame() {
-        if (((diffX < 0) && posX <= diffX) || ((diffX > 0) && posX >= diffX)) {
+        if (((diffX < 0) && posX <= diffX) || ((diffX > 0) && posX >= diffX) || ((diffY < 0) && posY <= diffY) || ((diffY > 0) && posY >= diffY)) {
             mvPiece.style.left = diffX + 'px';
             mvPiece.style.top = diffY + 'px';
             clearInterval(id);
+            if (sqTo.firstChild) {
+                sqTo.removeChild(sqTo.firstChild);
+            }
             sqTo.append(mvPiece);
             mvPiece.style.left = "";
             mvPiece.style.top = "";
             chess.move({from: mvFrom, to: mvTo});
-            document.getElementById("fen").textContent = chess.ascii();
+            if (chess.in_checkmate()) {
+                document.getElementById("result").textContent = "CHECKMATE";
+            }
+            // document.getElementById("fen").textContent = chess.ascii();
         } else {
             posX += speed * Math.cos(angle);
             posY += speed * Math.sin(angle);
@@ -62,9 +64,6 @@ function moveBot(move) {
             mvPiece.style.top = posY + 'px';
         }
     }
-    //append piece to sqTo
-    // sqTo.append(mvPiece);
-    //make move in chessjs
 }
 
 //set up api
