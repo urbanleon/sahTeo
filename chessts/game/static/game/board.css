@@ -90,7 +90,7 @@ img {
     transition: opacity 1s;
 }
 
-#bestMove {
+.printOut {
     margin: 5em auto;
     font-family: 'Courier New', Courier, monospace;
     white-space: pre-wrap;

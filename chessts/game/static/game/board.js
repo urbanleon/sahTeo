@@ -7,7 +7,9 @@ var chess = new Chess();
 
 let bestMove = document.getElementById("bestMove");
 
-
+//FIXME: black captures white
+//FIXME: vertical movements not caught because only checks posX for clearInterval
+//FIXME: angle sometimes incorrect
 function moveBot(move) {
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
@@ -23,6 +25,7 @@ function moveBot(move) {
     let endPos = sqTo.getBoundingClientRect();
     console.log(startPos);
     console.log(endPos);
+
     //set element zIndex to 1
     mvPiece.style.zIndex = 1;
 
@@ -30,10 +33,13 @@ function moveBot(move) {
     let diffX = endPos.x - startPos.x;
     let diffY = endPos.y - startPos.y;
     let angle = Math.atan(diffY / diffX);
-    console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + angle);
+    if (diffX < 0 && diffY < 0) {
+        angle = Math.PI - angle * -1;
+    }
+    console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + (angle * 180 / Math.PI));
     //animate piece
     let id = setInterval(frame, 5);
-    let speed = 5;
+    let speed = 10;
     // let posX = mvPiece.getBoundingClientRect().x;
     // let posY = mvPiece.getBoundingClientRect().y;
     let posX = 0;
@@ -43,15 +49,21 @@ function moveBot(move) {
             mvPiece.style.left = diffX + 'px';
             mvPiece.style.top = diffY + 'px';
             clearInterval(id);
+            sqTo.append(mvPiece);
+            mvPiece.style.left = "";
+            mvPiece.style.top = "";
+            chess.move({from: mvFrom, to: mvTo});
+            document.getElementById("fen").textContent = chess.ascii();
         } else {
             posX += speed * Math.cos(angle);
             posY += speed * Math.sin(angle);
+            document.getElementById("pos").textContent = Math.floor(posX) + ' ' + Math.floor(posY);
             mvPiece.style.left = posX + 'px';
             mvPiece.style.top = posY + 'px';
         }
     }
     //append piece to sqTo
-
+    // sqTo.append(mvPiece);
     //make move in chessjs
 }
 
@@ -265,7 +277,6 @@ function dropPiece(piece, currSquare, validMoves) {
     let tempMove = checkSpecialMoves(currSquare, chosenMove, dropSquare, piece);
 
     chess.move(tempMove);
-    // document.getElementById("fen").textContent = chess.ascii();
 
     if (chess.turn() == 'b') {
         sendFen();
@@ -273,6 +284,7 @@ function dropPiece(piece, currSquare, validMoves) {
     else {
         bestMove.textContent = "";
     }
+
 
     if (chess.in_checkmate()) {
         document.getElementById("result").textContent = "CHECKMATE";
