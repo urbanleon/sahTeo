@@ -18,7 +18,7 @@ My current evaluation function is a weighted sum based on the relative strength 
   * uses modified board printout 
 * Stockfish engine in `/usr/games/` (if using `minimax_stockfish.py`)
   * Can modify `minimax_stockfish.py` to look for stockfish in custom directory 
-* Python django
+* Python django (if using web GUI)
 ***
 <strong>Run Instructions</strong>:
 * (Requires Python3.6 or greater)
