@@ -5,15 +5,12 @@ var pos = document.getElementById("position");
 
 var chess = new Chess();
 
-// let bestMove = document.getElementById("bestMove");
-
-//FIXME: black captures white
-//FIXME: vertical movements not caught because only checks posX for clearInterval
-//FIXME: angle sometimes incorrect
+//FIXME: when piece overshoots landing square, board briefly shows scrollbar
+//       try appending to body, then animating, might have to change starting
+//       position from 0,0 to starting square position
 function moveBot(move) {
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
-    // bestMove.textContent = 'from: ' + mvFrom + ' to: ' + mvTo;
 
     //get elements with id's of sqfrom and sqto
     let sqFrom = document.getElementById(mvFrom);
@@ -34,27 +31,23 @@ function moveBot(move) {
     if (diffX < 0 || (diffX < 0 && diffY < 0)) {
         angle = Math.PI - angle * -1;
     }
-    // console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + (angle * 180 / Math.PI));
+
     //animate piece
     let id = setInterval(frame, 15);
     let speed = 30;
     let posX = 0;
     let posY = 0;
+    mvPiece.style.visibility = "visible";
     function frame() {
-        if (((diffX < 0) && posX <= diffX) || ((diffX > 0) && posX >= diffX) || ((diffY < 0) && posY <= diffY) || ((diffY > 0) && posY >= diffY)) {
+        if (((diffX < 0) && posX + speed <= diffX) || ((diffX > 0) && posX + speed >= diffX) || 
+            ((diffY < 0) && posY + speed <= diffY) || ((diffY > 0) && posY + speed >= diffY)) {
             mvPiece.style.left = diffX + 'px';
             mvPiece.style.top = diffY + 'px';
             clearInterval(id);
-            if (sqTo.firstChild) {
-                sqTo.removeChild(sqTo.firstChild);
-            }
-            sqTo.append(mvPiece);
-            mvPiece.style.left = "";
-            mvPiece.style.top = "";
+            checkCapture(sqTo, mvPiece);
+            resetPosition(mvPiece);
             chess.move({from: mvFrom, to: mvTo});
-            if (chess.in_checkmate()) {
-                document.getElementById("result").textContent = "CHECKMATE";
-            }
+            checkEndGame();
             // document.getElementById("fen").textContent = chess.ascii();
         } else {
             posX += speed * Math.cos(angle);
@@ -215,27 +208,33 @@ function removeHighlights() {
 }
 
 function resetPosition(piece) {
-    piece.style.top = 0;
-    piece.style.left = 0;
+    piece.style.top = "";
+    piece.style.left = "";
 }
 
 function revertPosition(isValid, closestDrop, currSquare, piece) {
     let dropSquare = currSquare.id;
     if (isValid) {
-        //if an image is already present, this indicates a capture
-        if (closestDrop.firstChild) {
-            closestDrop.removeChild(closestDrop.firstChild);
-        }
-        closestDrop.append(piece);
+        checkCapture(closestDrop, piece);
         dropSquare = closestDrop.id;
     }
     else {
-        if (currSquare.firstChild) {
-            currSquare.removeChild(currSquare.firstChild);
-        }
-        currSquare.append(piece);
+        checkCapture(currSquare, piece)
     }
-    return dropSquare
+    return dropSquare;
+}
+
+function checkCapture(square, newPiece) {
+    if (square.firstChild) {
+        square.removeChild(square.firstChild);
+    }
+    square.append(newPiece);
+}
+
+function checkEndGame() {
+    if (chess.in_checkmate()) {
+        document.getElementById("result").textContent = "CHECKMATE";
+    }
 }
 
 function sendFen() {
@@ -284,8 +283,5 @@ function dropPiece(piece, currSquare, validMoves) {
         bestMove.textContent = "";
     }
 
-
-    if (chess.in_checkmate()) {
-        document.getElementById("result").textContent = "CHECKMATE";
-    }
+    checkEndGame();
 }
