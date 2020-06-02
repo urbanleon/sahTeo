@@ -7,6 +7,63 @@ var chess = new Chess();
 
 let bestMove = document.getElementById("bestMove");
 
+
+function moveBot(move) {
+    let mvFrom = move.substring(0,2);
+    let mvTo = move.substring(2,4);
+    bestMove.textContent = 'from: ' + mvFrom + ' to: ' + mvTo;
+
+    //get elements with id's of sqfrom and sqto
+    let sqFrom = document.getElementById(mvFrom);
+    let sqTo = document.getElementById(mvTo);
+    let mvPiece = sqFrom.firstChild;
+    console.log(mvPiece);
+    //get positions of those elements
+    let startPos = sqFrom.getBoundingClientRect();
+    let endPos = sqTo.getBoundingClientRect();
+    console.log(startPos);
+    console.log(endPos);
+    //set element zIndex to 1
+    mvPiece.style.zIndex = 1;
+
+    //calculate angle between elements
+    let diffX = endPos.x - startPos.x;
+    let diffY = endPos.y - startPos.y;
+    let angle = Math.atan(diffY / diffX);
+    console.log('x,y,angle: ' + diffX + ' ' + diffY + ' ' + angle);
+    //animate piece
+    let id = setInterval(frame, 5);
+    let speed = 5;
+    // let posX = mvPiece.getBoundingClientRect().x;
+    // let posY = mvPiece.getBoundingClientRect().y;
+    let posX = 0;
+    let posY = 0;
+    function frame() {
+        if (((diffX < 0) && posX <= diffX) || ((diffX > 0) && posX >= diffX)) {
+            mvPiece.style.left = diffX + 'px';
+            mvPiece.style.top = diffY + 'px';
+            clearInterval(id);
+        } else {
+            posX += speed * Math.cos(angle);
+            posY += speed * Math.sin(angle);
+            mvPiece.style.left = posX + 'px';
+            mvPiece.style.top = posY + 'px';
+        }
+    }
+    //append piece to sqTo
+
+    //make move in chessjs
+}
+
+//set up api
+let xhr = new XMLHttpRequest();
+xhr.onload = function() {
+    let move = xhr.responseText
+    bestMove.textContent = move;
+    moveBot(move);
+}
+
+//initalize pieces to be dragged and dropped
 for (let i = 0; i < pieces.length; ++i) {  
 
     //disable native drag event
@@ -171,10 +228,6 @@ function revertPosition(isValid, closestDrop, currSquare, piece) {
 }
 
 function sendFen() {
-    let xhr = new XMLHttpRequest();
-    xhr.onload = function() {
-        bestMove.textContent = xhr.responseText;
-    }
     xhr.open("POST", "http://127.0.0.1:8000/", true);
     let fen = chess.fen();
     xhr.send(JSON.stringify({value: fen}));
