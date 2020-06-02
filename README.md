@@ -29,7 +29,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 - My engine vs. Stockfish engine at lowest settings:
   - `$ python3 minimax_stockfish.py`
 
-- To run using web app GUI locally:
+- To run using <strong>web app GUI</strong> locally:
   - `$ cd chessts`
   - `$ python3 manage.py runserver`
   - open web browser and type `127.0.0.1:8000` into address bar (do not type localhost)
