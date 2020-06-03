@@ -13,7 +13,7 @@ def play(request):
     #FIX ME: change getMove route to this to check if request.method == "POST"
     if (request.method == "POST"):
         fen = json.loads(request.body)
-        print(fen['value'])
+        # print(fen['value'])
         board = chess.Board()
         board.set_fen(fen['value'])
         move, score = ab.minimax(board, 3, 1, -10000, 10000)
