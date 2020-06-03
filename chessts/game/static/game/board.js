@@ -37,7 +37,7 @@ function moveBot(move) {
     let speed = 30;
     let posX = 0;
     let posY = 0;
-    mvPiece.style.visibility = "visible";
+
     function frame() {
         if (((diffX < 0) && posX + speed <= diffX) || ((diffX > 0) && posX + speed >= diffX) || 
             ((diffY < 0) && posY + speed <= diffY) || ((diffY > 0) && posY + speed >= diffY)) {
@@ -78,7 +78,8 @@ for (let i = 0; i < pieces.length; ++i) {
     //create event handlers for custom drag events
     pieces[i].onmousedown = function(event) {
         this.style.position = 'absolute';
-        this.style.zIndex = 1000;
+        this.style.zIndex = 1;
+        this.style.cursor = 'grabbing';
         document.body.append(this);
         
         moveAt(event.pageX, event.pageY, pieces[i]);
@@ -93,6 +94,7 @@ for (let i = 0; i < pieces.length; ++i) {
         let validMoves = getValidMoves(this);
 
         this.onmouseup = function() {
+            this.style.cursor = 'grab';
             dropPiece(this, currSquare, validMoves);
             document.removeEventListener('mousemove', onMouseMove);
             this.onmouseup = null;
