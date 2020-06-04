@@ -2,19 +2,103 @@
 import chess
 # import random
 
+pawntable = [0,  0,  0,  0,  0,  0,  0,  0,
+             5, 10, 10,-20,-20, 10, 10,  5,
+             5, -5,-10,  0,  0,-10, -5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5,  5, 10, 25, 25, 10,  5,  5,
+            10, 10, 20, 30, 30, 20, 10, 10,
+            50, 50, 50, 50, 50, 50, 50, 50,
+             0,  0,  0,  0,  0,  0,  0,  0]
+
+knightstable = [-50,-40,-30,-30,-30,-30,-40,-50,
+                -40,-20,  0,  5,  5,  0,-20,-40,
+                -30,  5, 10, 15, 15, 10,  5,-30,
+                -30,  0, 15, 20, 20, 15,  0,-30,
+                -30,  5, 15, 20, 20, 15,  5,-30,
+                -30,  0, 10, 15, 15, 10,  0,-30,
+                -40,-20,  0,  0,  0,  0,-20,-40,
+                -50,-40,-30,-30,-30,-30,-40,-50]
+
+bishoptable = [-20,-10,-10,-10,-10,-10,-10,-20,
+               -10,  5,  0,  0,  0,  0,  5,-10,
+               -10, 10, 10, 10, 10, 10, 10,-10,
+               -10,  0, 10, 10, 10, 10,  0,-10,
+               -10,  5,  5, 10, 10,  5,  5,-10,
+               -10,  0,  5, 10, 10,  5,  0,-10,
+               -10,  0,  0,  0,  0,  0,  0,-10,
+               -20,-10,-10,-10,-10,-10,-10,-20]
+
+rooktable = [0,  0,  0,  5,  5,  0,  0,  0,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+             5, 10, 10, 10, 10, 10, 10,  5,
+             0,  0,  0,  0,  0,  0,  0,  0]
+
+queentable = [-20,-10,-10, -5, -5,-10,-10,-20,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -10,  5,  5,  5,  5,  5,  0,-10,
+                0,  0,  5,  5,  5,  5,  0, -5,
+               -5,  0,  5,  5,  5,  5,  0, -5,
+              -10,  0,  5,  5,  5,  5,  0,-10,
+              -10,  0,  0,  0,  0,  0,  0,-10,
+              -20,-10,-10, -5, -5,-10,-10,-20]
+
+kingtable = [20, 30, 10,  0,  0, 10, 30, 20,
+             20, 20,  0,  0,  0,  0, 20, 20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30]
+
+pawntable = [i / 10 for i in pawntable]
+knightstable = [i / 10 for i in knightstable]
+bishoptable = [i / 10 for i in bishoptable]
+rooktable = [i / 10 for i in rooktable]
+queentable = [i / 10 for i in queentable]
+kingtable = [i / 10 for i in kingtable]
+
+
 def evaluate(board):
-    white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-    black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-    fen = board.board_fen()
+    pawn = sum([pawntable[i] + 10 for i in board.pieces(chess.PAWN, chess.BLACK)])
+    pawn += sum([-pawntable[chess.square_mirror(i)] + -10 for i in board.pieces(chess.PAWN, chess.WHITE)])
 
-    w_score = 0
-    b_score = 0
+    knight = sum([knightstable[i] + 30 for i in board.pieces(chess.KNIGHT, chess.BLACK)])
+    knight += sum([-knightstable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.KNIGHT, chess.WHITE)])
 
-    for k,v in white.items():
-        w_score += fen.count(k) * v
-    for k,v in black.items():
-        b_score += fen.count(k) * v
-    return w_score + b_score
+    bishop = sum([bishoptable[i] + 30 for i in board.pieces(chess.BISHOP, chess.BLACK)])
+    bishop += sum([-bishoptable[chess.square_mirror(i)] + -30 for i in board.pieces(chess.BISHOP, chess.WHITE)])
+
+
+    rook = sum([rooktable[i] + 50 for i in board.pieces(chess.ROOK, chess.BLACK)])
+    rook += sum([-rooktable[chess.square_mirror(i)] + -50 for i in board.pieces(chess.ROOK, chess.WHITE)])
+
+    queen = sum([queentable[i] + 90 for i in board.pieces(chess.QUEEN, chess.BLACK)])
+    queen += sum([-queentable[chess.square_mirror(i)] + -90 for i in board.pieces(chess.QUEEN, chess.WHITE)])
+
+    king = sum([kingtable[i] + 900 for i in board.pieces(chess.KING, chess.BLACK)])
+    king += sum([-kingtable[chess.square_mirror(i)] + -900 for i in board.pieces(chess.KING, chess.WHITE)])
+
+    return pawn + knight + rook + queen + king
+
+# def evaluate(board):
+#     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
+#     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
+#     fen = board.board_fen()
+
+#     w_score = 0
+#     b_score = 0
+
+#     for k,v in white.items():
+#         w_score += fen.count(k) * v
+#     for k,v in black.items():
+#         b_score += fen.count(k) * v
+#     return w_score + b_score
 
 
 def minimax(board, depth, turn):
@@ -22,7 +106,7 @@ def minimax(board, depth, turn):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
-    possible_moves.reverse()
+    # possible_moves.reverse()
 
 
     if (turn == 1):
