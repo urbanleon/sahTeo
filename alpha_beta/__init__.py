@@ -125,7 +125,7 @@ def minimax(board, depth, is_maximizing, alpha, beta):
         return None, evaluate(board)
 
     possible_moves = list(board.legal_moves)
-    possible_moves.reverse()
+    # possible_moves.reverse()
 
 
     if (is_maximizing == 1): #MAX
@@ -139,8 +139,8 @@ def minimax(board, depth, is_maximizing, alpha, beta):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not is_maximizing, alpha, beta)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
             if score > max_score:
                 max_score = score
