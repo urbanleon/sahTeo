@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import chess
-# import random
+import chess.polyglot
 
 #have to reverse piece tables because array indexing is reverse of chess board indexing
 
@@ -119,6 +119,11 @@ def evaluate(board):
 #     naive_score = w_score + b_score
 #     return w_score + b_score
 
+def opening(board):
+    move = chess.polyglot.MemoryMappedReader("pwned.polyglot.bin").weighted_choice(board)
+    return move.move, -1
+    move, score = minimax(board, 3, 1, -10000, 10000)
+    return move, score
 
 def minimax(board, depth, is_maximizing, alpha, beta):
     if (depth == 0):
@@ -237,12 +242,13 @@ def main():
                 print("BLACK is in CHECK.")
             # print("BLACK's turn. ")
 
-            move, score = minimax(board, 3, 1, -10000, 10000)
+            # move, score = minimax(board, 3, 1, -10000, 10000)
+            move, score = opening(board)
             try:
                 print("BLACK's move: ", board.san(move))
             except AttributeError:
                 print("legal moves: ", board.legal_moves)
-            # print("Score: ", score)
+            print("Score: ", score)
             print('\n')
             board.push_uci(move.uci())
 

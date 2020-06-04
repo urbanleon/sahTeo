@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import chess
+import chess.polyglot
 # import random
 
 #have to reverse piece tables because array indexing is reverse of chess board indexing
@@ -103,21 +104,13 @@ def evaluate(board):
     return pawn + knight + rook + queen + king
 
 
-# def evaluate(board):
-#     white = {"P":-10, "N":-30, "B":-30, "R":-50, "Q":-90, "K":-900}
-#     black = {"p":10, "n":30, "b":30, "r":50, "q":90, "k":900}
-#     fen = board.board_fen()
-#
-#     w_score = 0
-#     b_score = 0
-#
-#     for k,v in white.items():
-#         w_score += fen.count(k) * v
-#     for k,v in black.items():
-#         b_score += fen.count(k) * v
-#
-#     naive_score = w_score + b_score
-#     return w_score + b_score
+def opening(board):
+    try:
+        move = chess.polyglot.MemoryMappedReader("pwned.polyglot.bin").weighted_choice(board)
+        return move.move, -1
+    except: 
+        move, score = minimax(board, 3, 1, -10000, 10000)
+        return move, score
 
 
 def minimax(board, depth, is_maximizing, alpha, beta):
@@ -139,8 +132,8 @@ def minimax(board, depth, is_maximizing, alpha, beta):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not is_maximizing, alpha, beta)
 
-            if (depth == 3):
-                print("mv: ", board.san(move), " score: ", score)
+            # if (depth == 3):
+            #     print("mv: ", board.san(move), " score: ", score)
 
             if score > max_score:
                 max_score = score
@@ -237,7 +230,8 @@ def main():
                 print("BLACK is in CHECK.")
             # print("BLACK's turn. ")
 
-            move, score = minimax(board, 3, 1, -10000, 10000)
+            # move, score = minimax(board, 3, 1, -10000, 10000)
+            move, score = opening(board)
             try:
                 print("BLACK's move: ", board.san(move))
             except AttributeError:

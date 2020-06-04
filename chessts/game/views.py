@@ -8,13 +8,16 @@ import chess
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+board = chess.Board()
+
 @csrf_exempt
 def play(request):
     if (request.method == "POST"):
         fen = json.loads(request.body)
         # print(fen['value'])
-        board = chess.Board()
         board.set_fen(fen['value'])
-        move, score = ab.minimax(board, 3, 1, -10000, 10000)
+        # move, score = ab.minimax(board, 3, 1, -10000, 10000)
+        move, score = ab.opening(board)
+        print(move.uci(), score)
         return HttpResponse(move.uci())
     return render(request, 'game/board.html')
