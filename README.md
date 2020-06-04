@@ -34,7 +34,12 @@ My current evaluation function is a weighted sum based on the relative strength 
   - `$ python3 manage.py runserver`
   - open web browser and type `127.0.0.1:8000` into address bar (do not type localhost)
 
-
+***
+<strong>Source Code Paths</strong>
+- Updated CSS and Javascript is located in `chessts/game/static/game/`
+- Updated HTML is located in `chessts/game/templates/game`
+- Updated minimax and alpha-beta algorithm located in `alpha_beta` directory
+***
 <strong>Known Bugs</strong>:
 - Mouse-up event does not register when pieces dragged outside viewport, resulting in unwanted behavior
   - will try limiting piece movement to board edges
