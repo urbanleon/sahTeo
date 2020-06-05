@@ -11,7 +11,7 @@ The Minimax algorithm is a search algorithm for finding the optimal move to make
 Alpha-Beta Pruning is an optimization for the Minimax algorithm that drastically improves performance. It eliminates nodes that will not have an effect on the outcome of the game. The "best-move-so-far" is saved for both Max and Min, and is tracked for a given level of the game tree. For example, if there is a Min node with 2 child Max nodes, and the first move for Max node 2 is better (greater) than the best move of Max node 1, it will definitely not be chosen by the parent Min node (who will want to minimize the score), so all subsequent Max node 2 moves will be unnecessary to search. 
 
 <p align="center">
-    <img src="https://github.com/tshiels/chess/blob/master/ab_img.png">
+    <img src="https://github.com/tshiels/chess/blob/master/ab_img.jpg">
 </p>
 
 This program plays Chess using the Minimax algorithm with alpha-beta pruning. You can play against the engine, or watch my engine play against the stockfish engine. 
