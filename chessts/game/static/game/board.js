@@ -236,17 +236,20 @@ function checkCapture(square, newPiece) {
 function checkEndGame() {
     if (chess.in_checkmate()) {
         let gameResult = chess.turn() == 'b' ? "WHITE wins by" : "BLACK wins by";
-        document.getElementById("winner").textContent = gameResult;
+        document.getElementById("winner").innerHTML = gameResult;
         document.getElementById("endGameType").textContent = "CHECKMATE";
     } 
     else if (chess.in_threefold_repetition()) {
-        document.getElementById("endGameType").textContent = "DRAW - Threefold Repetition";
+        document.getElementById("endGameType").innerHTML = "DRAW";
+        document.getElementById("endBy").textContent = "Threefold Repetition";
     }
     else if (chess.in_stalemate()) {
-        document.getElementById("endGameType").textContent = "DRAW - Stalemate";
+        document.getElementById("endGameType").innerHTML = "DRAW";
+        document.getElementById("endBy").textContent = "Stalemate";
     }
     else if (chess.insufficient_material()) {
-        document.getElementById("endGameType").textContent = "DRAW - Insufficient Material";
+        document.getElementById("endGameType").innerHTML = "DRAW";
+        document.getElementById("endBy").textContent = "Insufficient Material";
     }
     else if (chess.in_draw()) {
         document.getElementById("endGameType").textContent = "DRAW";
@@ -295,9 +298,9 @@ function dropPiece(piece, currSquare, validMoves) {
     if (chess.turn() == 'b') {
         sendFen();
     }
-    else {
-        bestMove.textContent = "";
-    }
+    // else {
+    //     bestMove.textContent = "";
+    // }
 
     checkEndGame();
 }
