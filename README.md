@@ -52,3 +52,4 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Game currently does not check for draw, stalemate, threefold repeititon
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated
+- FEN does not match board in rare instances
