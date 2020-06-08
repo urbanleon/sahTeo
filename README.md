@@ -31,17 +31,16 @@ My current evaluation function is a weighted sum based on the relative strength 
 ***
 <strong>Run Instructions</strong>:
 * (Requires Python3.6 or greater)
+- To run using <strong>web app GUI</strong> locally:
+  - `$ cd chessts`
+  - `$ python3 manage.py runserver`
+  - open web browser and type `127.0.0.1:8000` into address bar (do not type localhost)
 * Minimax:
   * `$ python3 minimax.py`
 - Minimax with Alpha-Beta Pruning:
   - `$ python3 alpha_beta.py`
 - My engine vs. Stockfish engine at lowest settings:
   - `$ python3 minimax_stockfish.py`
-
-- To run using <strong>web app GUI</strong> locally:
-  - `$ cd chessts`
-  - `$ python3 manage.py runserver`
-  - open web browser and type `127.0.0.1:8000` into address bar (do not type localhost)
 
 ***
 <strong>Source Code Locations:</strong>
