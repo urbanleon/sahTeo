@@ -1,6 +1,6 @@
 # Chess Engine + Django Web App
 
-<iframe src="https://giphy.com/embed/LRIN4IOP3wtDqoGATe" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/LRIN4IOP3wtDqoGATe">via GIPHY</a></p>
+<img src="https://giphy.com/gifs/LRIN4IOP3wtDqoGATe" width="480" height="270">
 
 <strong>Summary</strong>
 <br>
