@@ -54,3 +54,4 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated
 - FEN does not match board in rare instances, and does not register visually
+  - gui does not handle castling, so game moves rook internally, but does not display visually, ostensibly freezing game
