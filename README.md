@@ -1,6 +1,6 @@
 # Chess Engine + Django Web App
 
-<img src="https://giphy.com/gifs/LRIN4IOP3wtDqoGATe" width="480" height="270">
+<img src="chessts_demo.gif" width="480" height="270">
 
 <strong>Summary</strong>
 <br>
