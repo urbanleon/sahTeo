@@ -46,7 +46,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 ***
 <strong>Source Code Locations:</strong>
 - Updated CSS and Javascript is located in `chessts/game/static/game/`
-- Updated HTML is located in `chessts/game/templates/game`
+- Updated HTML is located in `chessts/game/templates/game/`
 - Updated minimax and alpha-beta algorithm located in `alpha_beta` directory
 ***
 <strong>Known Bugs</strong>:
@@ -54,4 +54,4 @@ My current evaluation function is a weighted sum based on the relative strength 
   - will try limiting piece movement to board edges
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated
-- FEN does not match board in rare instances
+- FEN does not match board in rare instances, and does not register visually
