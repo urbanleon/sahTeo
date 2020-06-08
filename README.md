@@ -1,5 +1,7 @@
 # Chess Engine + Django Web App
 
+<iframe src="https://giphy.com/embed/LRIN4IOP3wtDqoGATe" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/LRIN4IOP3wtDqoGATe">via GIPHY</a></p>
+
 <strong>Summary</strong>
 <br>
 The Minimax algorithm is a search algorithm for finding the optimal move to make in a two-player zero-sum game with perfect information (such as chess, checkers, tic-tac-toe). The game tree is recursively generated with each level (turn) alternating between players "Max" and "Min". Max will always try to maximize the score, and vice versa for Min. A score for any given board state will be evaluated at either the terminal game states, or a predeterined depth if the game tree is too large. 
