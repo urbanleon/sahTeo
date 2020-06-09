@@ -5,9 +5,21 @@ var pos = document.getElementById("position");
 
 var chess = new Chess();
 
-//FIXME: when piece overshoots landing square, board briefly shows scrollbar
-//       try appending to body, then animating, might have to change starting
-//       position from 0,0 to starting square position
+window.onload = resizePieces();
+window.addEventListener('resize', resizePieces);
+
+function resizePieces() {
+    let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
+    for (let i = 0; i < squares.length; i++) {
+        if (squares[i].firstChild) {
+            let currLink = squares[i].firstChild.src;
+            let pieceType = currLink.substr(currLink.length - 6, currLink.length);
+            let newLink = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/" + pieceType;
+            squares[i].firstChild.src = newLink;
+        }
+    }
+}
+
 function moveBot(move) {
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
