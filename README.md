@@ -52,6 +52,6 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Mouse-up event does not register when pieces dragged outside viewport, resulting in unwanted behavior
   - will try limiting piece movement to board edges
 - Limited minimax search results in some moves being scored equally, resulting in the 
-  same move being repeated
-- FEN does not match board in rare instances, and does not register visually
+  same move being repeated back and forth
+- CPU's move does not register visually on rare occasions
   - gui does not handle castling, so game moves rook internally, but does not display visually, ostensibly freezing game
