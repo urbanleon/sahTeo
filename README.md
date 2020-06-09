@@ -51,8 +51,6 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Updated minimax and alpha-beta algorithm located in `alpha_beta` directory
 ***
 <strong>Known Bugs</strong>:
-- Mouse-up event does not register when pieces dragged outside viewport, resulting in unwanted behavior
-  - will try limiting piece movement to board edges
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated back and forth
 - CPU's move does not register visually on rare occasions

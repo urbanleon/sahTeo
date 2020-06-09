@@ -1,6 +1,6 @@
 var pieces = document.querySelectorAll("img");
 var squares = document.querySelectorAll("div .square");
-
+var board = document.querySelector('.board');
 var pos = document.getElementById("position");
 
 var chess = new Chess();
@@ -81,28 +81,45 @@ for (let i = 0; i < pieces.length; ++i) {
         this.style.zIndex = 1;
         this.style.cursor = 'grabbing';
         document.body.append(this);
-        
+
         moveAt(event.pageX, event.pageY, pieces[i]);
 
         function onMouseMove(event) {
             moveAt(event.pageX, event.pageY, pieces[i]);
         }
 
+        window.addEventListener('mouseup', mouseUpHandler);
         document.addEventListener('mousemove', onMouseMove);
 
         let currSquare = maxOverlap(this, potentialDrops(this));
+        console.log(currSquare);
         let validMoves = getValidMoves(this);
 
-        this.onmouseup = function() {
-            this.style.cursor = 'grab';
-            dropPiece(this, currSquare, validMoves);
+        function mouseUpHandler() {
+            // alert("hello mouse up");
+            pieces[i].style.cursor = 'grab';
+            dropPiece(pieces[i], currSquare, validMoves);
             document.removeEventListener('mousemove', onMouseMove);
-            this.onmouseup = null;
-        };
+            window.removeEventListener('mouseup', mouseUpHandler);
+        }
+
+        // this.onmouseup = function() {
+        //     this.style.cursor = 'grab';
+        //     dropPiece(this, currSquare, validMoves);
+        //     document.removeEventListener('mousemove', onMouseMove);
+        //     // window.removeEventListener('mouseup', handleWindowEvent);
+        //     this.onmouseup = null;
+        // };
 
         highlightValidMoves(this);
     };
 }
+
+// function mouseUpHandler(event, obj) {
+//     alert("mouse button unclicked");
+// }
+
+// let doMouseUp = (event) => mouseUpHandler(event, )
 
 function getValidMoves(piece) {
     let currSquare = maxOverlap(piece, potentialDrops(piece));
@@ -126,6 +143,26 @@ function highlightValidMoves(piece) {
 
 //image follows position of cursor
 function moveAt(pageX, pageY, obj) {
+    // let boardRect = board.getBoundingClientRect();
+    // if (pageX < boardRect.left) {
+    //     obj.style.left = boardRect.left;
+    // }
+    // else if (pageX > boardRect.right) {
+    //     obj.style.left = boardRect.right;
+    // }
+    // else {
+    //     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
+    // }
+
+    // if (pageY > boardRect.bottom) {
+    //     obj.style.top = boardRect.bottom;
+    // }
+    // else if (pageY < boardRect.top) {
+    //     obj.style.top = boardRect.top;
+    // }
+    // else {
+    //     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
+    // }
     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
 }
