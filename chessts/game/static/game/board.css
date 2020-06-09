@@ -10,6 +10,7 @@ html {
 
 body {
     margin: 0;
+    /* overflow: auto; */
     height: 100%;
     /* background-color: white; */
     padding-top: 1px;
@@ -33,8 +34,9 @@ body {
 img {
     background: transparent;
     position: absolute;
+    /* max-width: 100%;
+    max-height: 100%; */
     max-width: 100%;
-    max-height: 100%;
     /* filter: drop-shadow(0 0 5px rgba(0, 0, 0, )); */
     /* -webkit-filter: drop-shadow(2px 2px 5px rgb(99, 99, 99)); */
     filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12)) drop-shadow(0 2px 2px rgba(0,0,0,0.12)) drop-shadow(0 4px 4px rgba(0,0,0,0.12)) drop-shadow(0 8px 8px rgba(0,0,0,0.12)) drop-shadow(0 16px 16px rgba(0,0,0,0.12));
@@ -53,6 +55,7 @@ img:active:hover {
 .board {
     overflow: auto;
     max-width: 600px;
+    /* max-width: 40%; */
     margin: 5em auto auto;
     border-radius: 2px;
     /* prevents text highlighting */
