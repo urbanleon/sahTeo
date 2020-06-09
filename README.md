@@ -1,5 +1,5 @@
 # Chess Engine + Django Web App
-
+<p><strong>DEMO: </strong> http://chess-ts.herokuapp.com</p>
 <img src="imgs/chessts_demo.gif" width="480" height="270">
 <img src="imgs/chessts_demo2.gif" width="480" height="270">
 
