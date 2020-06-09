@@ -120,10 +120,12 @@ def evaluate(board):
 #     return w_score + b_score
 
 def opening(board):
-    move = chess.polyglot.MemoryMappedReader("pwned.polyglot.bin").weighted_choice(board)
-    return move.move, -1
-    move, score = minimax(board, 3, 1, -10000, 10000)
-    return move, score
+    try:
+        move = chess.polyglot.MemoryMappedReader("pwned.polyglot.bin").weighted_choice(board)
+        return move.move, -1
+    except: 
+        move, score = minimax(board, 3, 1, -10000, 10000)
+        return move, score
 
 def minimax(board, depth, is_maximizing, alpha, beta):
     if (depth == 0):
@@ -144,8 +146,8 @@ def minimax(board, depth, is_maximizing, alpha, beta):
             temp_board.push(move)
             (_, score) = minimax(temp_board, depth - 1, not is_maximizing, alpha, beta)
 
-            # if (depth == 3):
-            #     print("mv: ", board.san(move), " score: ", score)
+            if (depth == 3):
+                print("mv: ", board.san(move), " score: ", score)
 
             if score > max_score:
                 max_score = score
