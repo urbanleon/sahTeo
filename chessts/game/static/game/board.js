@@ -62,11 +62,9 @@ function moveBot(move) {
             resetPosition(mvPiece);
             chess.move({from: mvFrom, to: mvTo});
             checkEndGame();
-            // document.getElementById("fen").textContent = chess.ascii();
         } else {
             posX += speed * Math.cos(angle);
             posY += speed * Math.sin(angle);
-            // document.getElementById("pos").textContent = Math.floor(posX) + ' ' + Math.floor(posY);
             mvPiece.style.left = posX + 'px';
             mvPiece.style.top = posY + 'px';
         }
@@ -82,6 +80,7 @@ xhr.onload = function() {
 }
 
 //initalize pieces to be dragged and dropped
+//FIXME: when playing white, do no enable black for dragging
 for (let i = 0; i < pieces.length; ++i) {  
 
     //disable native drag event
@@ -98,42 +97,26 @@ for (let i = 0; i < pieces.length; ++i) {
 
         moveAt(event.pageX, event.pageY, pieces[i]);
 
+        window.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mousemove', onMouseMove);
+
+        let currSquare = maxOverlap(this, potentialDrops(this));
+        let validMoves = getValidMoves(this);
+
         function onMouseMove(event) {
             moveAt(event.pageX, event.pageY, pieces[i]);
         }
 
-        window.addEventListener('mouseup', mouseUpHandler);
-        document.addEventListener('mousemove', onMouseMove);
-
-        let currSquare = maxOverlap(this, potentialDrops(this));
-        console.log(currSquare);
-        let validMoves = getValidMoves(this);
-
-        function mouseUpHandler() {
-            // alert("hello mouse up");
+        function onMouseUp() {
             pieces[i].style.cursor = 'grab';
             dropPiece(pieces[i], currSquare, validMoves);
             document.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mouseup', mouseUpHandler);
+            window.removeEventListener('mouseup', onMouseUp);
         }
-
-        // this.onmouseup = function() {
-        //     this.style.cursor = 'grab';
-        //     dropPiece(this, currSquare, validMoves);
-        //     document.removeEventListener('mousemove', onMouseMove);
-        //     // window.removeEventListener('mouseup', handleWindowEvent);
-        //     this.onmouseup = null;
-        // };
 
         highlightValidMoves(this);
     };
 }
-
-// function mouseUpHandler(event, obj) {
-//     alert("mouse button unclicked");
-// }
-
-// let doMouseUp = (event) => mouseUpHandler(event, )
 
 function getValidMoves(piece) {
     let currSquare = maxOverlap(piece, potentialDrops(piece));
@@ -244,6 +227,8 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
     if (chosenMove) {
         let isPromotion = chosenMove.flags.indexOf('p');
         let isEnPassant = chosenMove.flags.indexOf('e');
+        let isKCastle = chosenMove.flags.indexOf('k');
+        let isQCastle = chosenMove.flags.indexOf('q');
         if (isPromotion != -1) {
             let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
             tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
@@ -258,6 +243,12 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
             let capturedId = chosenMove.to[0] + chosenMove.from[1];
             let capturedSquare = document.getElementById(capturedId);
             capturedSquare.removeChild(capturedSquare.firstChild);
+        }
+        if (isKCastle != -1) {
+            chess.turn() === 'w' ? moveBot('h1f1') : moveBot('h8f8');
+        }
+        if (isQCastle != -1) {
+            chess.turn() === 'w' ? moveBot('a1d1') : moveBot('a8d8');
         }
     }
     return tempMove;
