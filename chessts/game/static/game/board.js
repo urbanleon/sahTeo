@@ -20,6 +20,7 @@ function resizePieces() {
     }
 }
 
+//if move is 5 chars long, then promotion
 function moveBot(move) {
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
@@ -40,6 +41,7 @@ function moveBot(move) {
     let diffX = endPos.x - startPos.x;
     let diffY = endPos.y - startPos.y;
     let angle = Math.atan(diffY / diffX);
+    //account for opposite directions
     if (diffX < 0 || (diffX < 0 && diffY < 0)) {
         angle = Math.PI - angle * -1;
     }
@@ -233,14 +235,24 @@ function potentialDrops(obj) {
 }
 
 //FIXME: check color of promoted piece
+//currSquare: square element corresponding to original position
+//chosenMove: string of 'to' square, not full move
+//dropSquare: square element corresponding to chosenMove
+//piece: img element
 function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
     let tempMove = {from: currSquare.id, to: dropSquare};
     if (chosenMove) {
         let isPromotion = chosenMove.flags.indexOf('p');
         let isEnPassant = chosenMove.flags.indexOf('e');
         if (isPromotion != -1) {
+            let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
             tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
-            piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png";
+            if (chess.turn() === 'w') {
+                piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/wq.png";
+            }
+            else {
+                piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/bq.png";
+            }
         }
         if (isEnPassant != -1) {
             let capturedId = chosenMove.to[0] + chosenMove.from[1];
@@ -270,7 +282,8 @@ function revertPosition(isValid, closestDrop, currSquare, piece) {
         dropSquare = closestDrop.id;
     }
     else {
-        checkCapture(currSquare, piece)
+        // checkCapture(currSquare, piece);
+        currSquare.append(piece);
     }
     return dropSquare;
 }
@@ -347,9 +360,6 @@ function dropPiece(piece, currSquare, validMoves) {
     if (chess.turn() == 'b') {
         sendFen();
     }
-    // else {
-    //     bestMove.textContent = "";
-    // }
 
     checkEndGame();
 }
