@@ -69,6 +69,8 @@ function moveBot(move) {
             mvPiece.style.top = posY + 'px';
         }
     }
+
+    document.getElementById('thinking').classList.remove('lds-grid');
 }
 
 //set up api
@@ -350,6 +352,7 @@ function dropPiece(piece, currSquare, validMoves) {
 
     if (chess.turn() == 'b') {
         sendFen();
+        document.getElementById('thinking').classList.add('lds-grid');
     }
 
     checkEndGame();
