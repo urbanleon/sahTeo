@@ -14,7 +14,7 @@ function resizePieces() {
         if (squares[i].firstChild) {
             let currLink = squares[i].firstChild.src;
             let pieceType = currLink.substr(currLink.length - 6, currLink.length);
-            let newLink = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/" + pieceType;
+            let newLink = "https://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/" + pieceType;
             squares[i].firstChild.src = newLink;
         }
     }
@@ -233,10 +233,10 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
             let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
             tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
             if (chess.turn() === 'w') {
-                piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/wq.png";
+                piece.src = "https://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/wq.png";
             }
             else {
-                piece.src = "http://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/bq.png";
+                piece.src = "https://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/bq.png";
             }
         }
         if (isEnPassant != -1) {
@@ -310,7 +310,7 @@ function checkEndGame() {
 }
 
 function sendFen() {
-    xhr.open("POST", "http://127.0.0.1:8000/", true);
+    xhr.open("POST", document.URL, true);
     let fen = chess.fen();
     xhr.send(JSON.stringify({value: fen}));
 }
