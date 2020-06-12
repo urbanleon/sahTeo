@@ -25,9 +25,9 @@ body {
     /* #ffc886, rgb(255, 145, 20), #f83600 */
     background: white; 
     background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab); 
-    /* background: linear-gradient(to right, rgb(255, 217, 136), rgb(255,145,20), #f83600);  */
+    background: linear-gradient(to right, rgb(255, 217, 136), rgb(255,145,20), #f83600); 
     /* background: linear-gradient(to right, #b6b6b6, white, #b6b6b6);  */
-    background: linear-gradient(to right, #43cea2, #185a9d); 
+    /* background: linear-gradient(to right, #43cea2, #185a9d);  */
 
 }
 
@@ -135,88 +135,86 @@ img:active:hover {
     }
 }
 
+@media (max-height: 600px) {
+    .board {
+        max-width: 400px;
+    }
+}
+
 .thinkingContainer {
+    /* border: 1px solid black; */
     text-align: center;
-    margin-top: 2em;
+    margin-top: 1.5em;
+    padding-bottom: 0;
+    margin-bottom: 0em;
 }
   
 .lds-grid {
+    /* border: 1px solid red; */
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 80px;
+    max-height: 80px;
+    width: 5%;
+    height: 5%;
 
 }
 
 .lds-grid div {
-    position: absolute;
-    width: 16px;
-    height: 16px;
+    /* position: absolute; */
+    position: relative;
+    float: left;
+    width: 20%;
+    padding-bottom: 20%;
+    margin: 6%;
     border-radius: 20%;
-    /* background: rgb(143, 23, 255); */
     background: rgb(255, 255, 255);
     box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00e6db;
     animation: lds-grid 1s linear infinite;
 }
 
 .lds-grid div:nth-child(1) {
-    top: 8px;
-    left: 8px;
     animation-delay: 0s;
 }
 
 .lds-grid div:nth-child(2) {
-    top: 8px;
-    left: 32px;
     /* animation-delay: -0.4s; */
     animation-delay: -0.7s;
 }
 
 .lds-grid div:nth-child(3) {
-    top: 8px;
-    left: 56px;
     /* animation-delay: -0.8s; */
     animation-delay: -1.4s;
 }
 
 .lds-grid div:nth-child(4) {
-    top: 32px;
-    left: 8px;
     /* animation-delay: -0.4s; */
     animation-delay: -0.9s;
 
 }
 .lds-grid div:nth-child(5) {
-    top: 32px;
-    left: 32px;
     /* animation-delay: -0.8s; */
     animation-delay: -2.3s;
 }
 
 .lds-grid div:nth-child(6) {
-    top: 32px;
-    left: 56px;
     /* animation-delay: -1.2s; */
     animation-delay: -0.1s;
 }
 
 .lds-grid div:nth-child(7) {
-    top: 56px;
-    left: 8px;
     /* animation-delay: -0.8s; */
     animation-delay: -3.5s;
 }
 
 .lds-grid div:nth-child(8) {
-    top: 56px;
-    left: 32px;
     /* animation-delay: -1.2s; */
     animation-delay: -0.7s;
 }
 
 .lds-grid div:nth-child(9) {
-    top: 56px;
-    left: 56px;
     /* animation-delay: -1.6s; */
     animation-delay: -1.6s;
 }
@@ -224,14 +222,9 @@ img:active:hover {
 @keyframes lds-grid {
     0%, 100% {
     opacity: 1;
-    width: 16px;
-    height: 16px;
     }
 
     50% {
         opacity: 0.1;
-        /* border-radius: 0%; */
-        /* transform: scale(0.5,0.5); */
-        /* background: rgb(23, 151, 255); */
     }
 }

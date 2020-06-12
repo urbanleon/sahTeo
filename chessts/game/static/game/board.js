@@ -22,6 +22,7 @@ function resizePieces() {
 
 //if move is 5 chars long, then promotion
 function moveBot(move) {
+    console.log("moveBot: " + move)
     let mvFrom = move.substring(0,2);
     let mvTo = move.substring(2,4);
 
@@ -60,7 +61,19 @@ function moveBot(move) {
             clearInterval(id);
             checkCapture(sqTo, mvPiece);
             resetPosition(mvPiece);
-            chess.move({from: mvFrom, to: mvTo});
+            //FIXME: add promotion parameter to checkSpecialMoves()
+            let tempMove = null;
+            if (move.length === 5) {
+                tempMove = chess.move({from: mvFrom, to: mvTo, promotion: 'q'});
+            }
+            else {
+                tempMove = chess.move({from: mvFrom, to: mvTo});
+            }
+            console.log("moveBot tempMove: ");
+            console.log(tempMove);
+            // let lastMove = chess.history({verbose: true})[chess.history().length - 1];
+            console.log("mvFrom: " + mvFrom + ' mvTo: ' + mvTo);
+            checkSpecialMoves(mvFrom, tempMove, mvTo, mvPiece);
             checkEndGame();
         } else {
             posX += speed * Math.cos(angle);
@@ -219,13 +232,15 @@ function potentialDrops(obj) {
     return dropZones;
 }
 
-//FIXME: check color of promoted piece
-//currSquare: square element corresponding to original position
-//chosenMove: string of 'to' square, not full move
-//dropSquare: square element corresponding to chosenMove
+
+//currSquare (FROM square): square element corresponding to original position
+//chosenMove (MOVE object): string of 'to' square, not full move
+//              ^ WRONG: chessjs move object
+//dropSquare (TO square): square element corresponding to chosenMove
+//             ^ WRONG: id (string) of square to be dropped, whether chosenMove or currSquare.id
 //piece: img element
-function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
-    let tempMove = {from: currSquare.id, to: dropSquare};
+function checkSpecialMoves(currSquareId, chosenMove, dropSquare, piece) {
+    let tempMove = {from: currSquareId, to: dropSquare};
     if (chosenMove) {
         let isPromotion = chosenMove.flags.indexOf('p');
         let isEnPassant = chosenMove.flags.indexOf('e');
@@ -233,8 +248,8 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
         let isQCastle = chosenMove.flags.indexOf('q');
         if (isPromotion != -1) {
             let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
-            tempMove = {from: currSquare.id, to: dropSquare, promotion: 'q'};
-            if (chess.turn() === 'w') {
+            tempMove = {from: currSquareId, to: dropSquare, promotion: 'q'};
+            if (chosenMove.color === 'w') {
                 piece.src = "https://images.chesscomfiles.com/chess-themes/pieces/neo/" + squareWidth + "/wq.png";
             }
             else {
@@ -247,10 +262,10 @@ function checkSpecialMoves(currSquare, chosenMove, dropSquare, piece) {
             capturedSquare.removeChild(capturedSquare.firstChild);
         }
         if (isKCastle != -1) {
-            chess.turn() === 'w' ? moveBot('h1f1') : moveBot('h8f8');
+            chosenMove.color === 'w' ? moveBot('h1f1') : moveBot('h8f8');
         }
         if (isQCastle != -1) {
-            chess.turn() === 'w' ? moveBot('a1d1') : moveBot('a8d8');
+            chosenMove.color === 'w' ? moveBot('a1d1') : moveBot('a8d8');
         }
     }
     return tempMove;
@@ -346,7 +361,7 @@ function dropPiece(piece, currSquare, validMoves) {
     resetPosition(piece);
     removeHighlights();
 
-    let tempMove = checkSpecialMoves(currSquare, chosenMove, dropSquare, piece);
+    let tempMove = checkSpecialMoves(currSquare.id, chosenMove, dropSquare, piece); 
 
     chess.move(tempMove);
 
