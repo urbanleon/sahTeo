@@ -54,6 +54,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated back and forth
 - empty divs have non-zero height, causing scrollbar to appear when loading animation is active
+- game allows player to make moves after draw by threefold repitition
 ***
 <strong>To Do</strong>
 - make end-game popup and replay button
