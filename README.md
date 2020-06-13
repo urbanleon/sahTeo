@@ -55,9 +55,11 @@ My current evaluation function is a weighted sum based on the relative strength 
   same move being repeated back and forth
 - empty divs have non-zero height, causing scrollbar to appear when loading animation is active
 - game allows player to make moves after draw by threefold repitition
+- right-clicking and left-clicking can allow piece to be placed incorrectly
 ***
 <strong>To Do</strong>
 - make end-game popup and replay button
 - leaderboard
 - randomize moves of same score
 - difficulty settings / game options
+- disable right-click on board
