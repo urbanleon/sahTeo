@@ -53,9 +53,10 @@ My current evaluation function is a weighted sum based on the relative strength 
 <strong>Known Bugs</strong>:
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated back and forth
+- empty divs have non-zero height, causing scrollbar to appear when loading animation is active
 ***
 <strong>To Do</strong>
-- handle castling 
 - make end-game popup and replay button
-- leaderboard + about page
+- leaderboard
 - randomize moves of same score
+- difficulty settings / game options
