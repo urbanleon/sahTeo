@@ -69,10 +69,6 @@ function moveBot(move) {
             else {
                 tempMove = chess.move({from: mvFrom, to: mvTo});
             }
-            console.log("moveBot tempMove: ");
-            console.log(tempMove);
-            // let lastMove = chess.history({verbose: true})[chess.history().length - 1];
-            console.log("mvFrom: " + mvFrom + ' mvTo: ' + mvTo);
             checkSpecialMoves(mvFrom, tempMove, mvTo, mvPiece);
             checkEndGame();
         } else {
