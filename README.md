@@ -53,8 +53,7 @@ My current evaluation function is a weighted sum based on the relative strength 
 <strong>Known Bugs</strong>:
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated back and forth
-- CPU's move does not register visually on rare occasions
-  - GUI does not handle castling, so game moves rook internally, but does not display visually, halting game
+***
 <strong>To Do</strong>
 - handle castling 
 - make end-game popup and replay button
