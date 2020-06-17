@@ -54,7 +54,7 @@ img:active:hover {
 
 .navbar.navbar-expand-md.navbar-dark {
     line-height: 1;
-    padding: 0;
+    padding: 0 1rem;
 }
 
 .board {
