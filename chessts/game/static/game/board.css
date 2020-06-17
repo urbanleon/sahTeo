@@ -52,6 +52,11 @@ img:active:hover {
     cursor: grabbing;
 }
 
+.navbar.navbar-expand-md.navbar-dark {
+    line-height: 1;
+    padding: 0;
+}
+
 .board {
     overflow: auto;
     max-width: 600px;
@@ -131,7 +136,7 @@ img:active:hover {
 /* move up board for smaller screens */
 @media (min-width: 992px) { 
     .board {
-        margin: 10em auto auto;
+        margin: 8em auto auto;
     }
 }
 
