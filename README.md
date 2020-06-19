@@ -51,9 +51,9 @@ My current evaluation function is a weighted sum based on the relative strength 
 - Updated minimax and alpha-beta algorithm located in `alpha_beta` directory
 ***
 <strong>Known Bugs</strong>:
+- Loading animation appears indefinitely when white wins by checkmate
 - Limited minimax search results in some moves being scored equally, resulting in the 
   same move being repeated back and forth
-- empty divs have non-zero height, causing scrollbar to appear when loading animation is active
 - game allows player to make moves after draw by threefold repitition
 - right-clicking and left-clicking can allow piece to be placed incorrectly
 ***
