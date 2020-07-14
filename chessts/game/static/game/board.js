@@ -1,12 +1,20 @@
-var pieces = document.querySelectorAll("img");
-var squares = document.querySelectorAll("div .square");
-var board = document.querySelector('.board');
-var pos = document.getElementById("position");
-
-var chess = new Chess();
+const pieces = document.querySelectorAll("img");
+const squares = document.querySelectorAll("div .square");
+const board = document.querySelector('.board');
+const pos = document.getElementById("position");
+const xhr = new XMLHttpRequest();
+const chess = new Chess();
 
 window.onload = resizePieces();
 window.addEventListener('resize', resizePieces);
+
+//set up api
+xhr.onload = function() {
+    let move = xhr.responseText
+    moveBot(move);
+}
+
+initPieces();
 
 function resizePieces() {
     let squareWidth = Math.round(squares[0].getBoundingClientRect().width);
@@ -82,52 +90,48 @@ function moveBot(move) {
     document.getElementById('thinking').classList.remove('lds-grid');
 }
 
-//set up api
-let xhr = new XMLHttpRequest();
-xhr.onload = function() {
-    let move = xhr.responseText
-    // bestMove.textContent = move;
-    moveBot(move);
-}
 
 //initalize pieces to be dragged and dropped
 //FIXME: when playing white, do no enable black for dragging
-for (let i = 0; i < pieces.length; ++i) {  
+function initPieces() {
+    for (let i = 0; i < pieces.length; ++i) {  
 
-    //disable native drag event
-    pieces[i].ondragstart = function() {
-        return false;
-    }
-
-    //create event handlers for custom drag events
-    pieces[i].onmousedown = function(event) {
-        this.style.position = 'absolute';
-        this.style.zIndex = 1;
-        this.style.cursor = 'grabbing';
-        document.body.append(this);
-
-        moveAt(event.pageX, event.pageY, pieces[i]);
-
-        window.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('mousemove', onMouseMove);
-
-        let currSquare = maxOverlap(this, potentialDrops(this));
-        let validMoves = getValidMoves(this);
-
-        function onMouseMove(event) {
+        //disable native drag event
+        pieces[i].ondragstart = function() {
+            return false;
+        }
+    
+        //create event handlers for custom drag events
+        pieces[i].onmousedown = function(event) {
+            this.style.position = 'absolute';
+            this.style.zIndex = 1;
+            this.style.cursor = 'grabbing';
+            document.body.append(this);
+    
             moveAt(event.pageX, event.pageY, pieces[i]);
-        }
-
-        function onMouseUp() {
-            pieces[i].style.cursor = 'grab';
-            dropPiece(pieces[i], currSquare, validMoves);
-            document.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mouseup', onMouseUp);
-        }
-
-        highlightValidMoves(this);
-    };
+    
+            window.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('mousemove', onMouseMove);
+    
+            let currSquare = maxOverlap(this, potentialDrops(this));
+            let validMoves = getValidMoves(this);
+    
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY, pieces[i]);
+            }
+    
+            function onMouseUp() {
+                pieces[i].style.cursor = 'grab';
+                dropPiece(pieces[i], currSquare, validMoves);
+                document.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+            }
+    
+            highlightValidMoves(this);
+        };
+    }
 }
+
 
 function getValidMoves(piece) {
     let currSquare = maxOverlap(piece, potentialDrops(piece));
@@ -151,26 +155,6 @@ function highlightValidMoves(piece) {
 
 //image follows position of cursor
 function moveAt(pageX, pageY, obj) {
-    // let boardRect = board.getBoundingClientRect();
-    // if (pageX < boardRect.left) {
-    //     obj.style.left = boardRect.left;
-    // }
-    // else if (pageX > boardRect.right) {
-    //     obj.style.left = boardRect.right;
-    // }
-    // else {
-    //     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
-    // }
-
-    // if (pageY > boardRect.bottom) {
-    //     obj.style.top = boardRect.bottom;
-    // }
-    // else if (pageY < boardRect.top) {
-    //     obj.style.top = boardRect.top;
-    // }
-    // else {
-    //     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
-    // }
     obj.style.left = pageX - obj.offsetWidth / 2 + 'px';
     obj.style.top = pageY - obj.offsetHeight / 2 + 'px';
 }
@@ -230,10 +214,8 @@ function potentialDrops(obj) {
 
 
 //currSquare (FROM square): square element corresponding to original position
-//chosenMove (MOVE object): string of 'to' square, not full move
-//              ^ WRONG: chessjs move object
-//dropSquare (TO square): square element corresponding to chosenMove
-//             ^ WRONG: id (string) of square to be dropped, whether chosenMove or currSquare.id
+//chosenMove (MOVE object): chessjs move object
+//dropSquare (TO square): id (string) of square to be dropped, whether chosenMove or currSquare.id
 //piece: img element
 function checkSpecialMoves(currSquareId, chosenMove, dropSquare, piece) {
     let tempMove = {from: currSquareId, to: dropSquare};
