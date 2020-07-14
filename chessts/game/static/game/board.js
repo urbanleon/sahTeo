@@ -268,7 +268,6 @@ function revertPosition(isValid, closestDrop, currSquare, piece) {
         dropSquare = closestDrop.id;
     }
     else {
-        // checkCapture(currSquare, piece);
         currSquare.append(piece);
     }
     return dropSquare;
@@ -301,6 +300,9 @@ function checkEndGame() {
     }
     else if (chess.in_draw()) {
         document.getElementById("endGameType").textContent = "DRAW";
+    }
+    if (chess.game_over()) {
+        document.getElementById('thinking').classList.remove('lds-grid');
     }
 }
 
