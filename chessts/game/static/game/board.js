@@ -10,7 +10,7 @@ window.addEventListener('resize', resizePieces);
 
 //set up api
 xhr.onload = function() {
-    let move = xhr.responseText
+    let move = xhr.responseText;
     moveBot(move);
 }
 
