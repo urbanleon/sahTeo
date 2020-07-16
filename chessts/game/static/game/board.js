@@ -107,7 +107,12 @@ function initPieces() {
             // this.style.cursor = 'grabbing';
             document.body.append(this);
 
-            moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
+            if (event.targetTouches.length <= 1) {
+                moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
+            } 
+            else {
+                onTouchUp();
+            }
 
             window.addEventListener('touchend', onTouchUp);
             document.addEventListener('touchmove', onTouchMove);
