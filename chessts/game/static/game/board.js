@@ -100,7 +100,35 @@ function initPieces() {
         pieces[i].ondragstart = function() {
             return false;
         }
+        pieces[i].ontouchstart = function(event) {
+            console.log("touch started");
+            this.style.position = 'absolute';
+            this.style.zIndex = 1;
+            // this.style.cursor = 'grabbing';
+            document.body.append(this);
+
+            moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
+
+            window.addEventListener('touchend', onTouchUp);
+            document.addEventListener('touchmove', onTouchMove);
+
+            let currSquare = maxOverlap(this, potentialDrops(this));
+            let validMoves = getValidMoves(this);
     
+            function onTouchMove(event) {
+                moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
+            }
+    
+            function onTouchUp() {
+                // pieces[i].style.cursor = 'grab';
+                dropPiece(pieces[i], currSquare, validMoves);
+                document.removeEventListener('touchmove', onTouchMove);
+                window.removeEventListener('touchend', onTouchUp);
+                console.log("touch ended");
+            }
+    
+            highlightValidMoves(this);
+        };
         //create event handlers for custom drag events
         pieces[i].onmousedown = function(event) {
             this.style.position = 'absolute';
