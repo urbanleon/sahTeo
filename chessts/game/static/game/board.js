@@ -99,37 +99,33 @@ function initPieces() {
         //disable native drag event
         pieces[i].ondragstart = function() {
             return false;
-        }
+        };
         pieces[i].ontouchstart = function(event) {
-            console.log("touch started");
+            let currSquare = maxOverlap(this, potentialDrops(this));
+            let validMoves = getValidMoves(this);
+
+            if (event.touches.length > 1) {
+                event.preventDefault();
+                onTouchUp();
+                return;
+            }
             this.style.position = 'absolute';
             this.style.zIndex = 1;
-            // this.style.cursor = 'grabbing';
             document.body.append(this);
 
-            if (event.targetTouches.length <= 1) {
-                moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
-            } 
-            else {
-                onTouchUp();
-            }
+            moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
 
             window.addEventListener('touchend', onTouchUp);
             document.addEventListener('touchmove', onTouchMove);
-
-            let currSquare = maxOverlap(this, potentialDrops(this));
-            let validMoves = getValidMoves(this);
     
             function onTouchMove(event) {
                 moveAt(event.touches[0].pageX, event.touches[0].pageY, pieces[i]);
             }
     
             function onTouchUp() {
-                // pieces[i].style.cursor = 'grab';
                 dropPiece(pieces[i], currSquare, validMoves);
                 document.removeEventListener('touchmove', onTouchMove);
                 window.removeEventListener('touchend', onTouchUp);
-                console.log("touch ended");
             }
     
             highlightValidMoves(this);
