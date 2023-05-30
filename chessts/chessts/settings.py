@@ -26,7 +26,10 @@ SECRET_KEY = '!$&nxi0%8-p^+_&!tg)m*b@92p0#1kbkw2=^4^w=g#v_(a5!il'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+RENDER_EXTERNAL_HOSTNAME = 'https://chess-ts.onrender.com'
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
