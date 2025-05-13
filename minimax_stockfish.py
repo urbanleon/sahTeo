@@ -206,7 +206,7 @@ def print_captured(board):
     print('\n')
 
 def main():
-    engine = chess.engine.SimpleEngine.popen_uci("/usr/games/stockfish")
+    engine = chess.engine.SimpleEngine.popen_uci("C:/Code/Licenta/stockfish/stockfish-windows-x86-64-avx2.exe")
     engine.configure({"Skill Level": "0"})
     # engine.configure({"UCI_LimitStrength":"true", "UCI_Elo":"1350"})
     board = chess.Board()

@@ -1,77 +1,185 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="{% static 'game/board.css' %}">
-    <link rel="stylesheet" href="{% static 'game/shadow.css' %}">
-    <title>ChessTS</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="{% static 'game/board.css' %}" />
+    <link rel="stylesheet" href="{% static 'game/shadow.css' %}" />
+    <title>Teo</title>
     <script src="https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 
-    <link rel="stylesheet" href="{% static 'game/main.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/d1f9890ce6.js" crossorigin="anonymous"></script>
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'game/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'game/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'game/favicon-16x16.png' %}">  
-    <link rel="manifest" href="{% static 'game/site.webmanifest' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'game/main.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Teko:wght@300;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/d1f9890ce6.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'game/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'game/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'game/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'game/site.webmanifest' %}" />
+  </head>
+  <body>
     <header class="site-header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-          <div class="container">
-            <a class="navbar-brand mr-4" href="/"><i class="fas fa-chess-knight"></i> ChessTS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="/"
+            ><i class="fas fa-chess-knight"></i> Teo</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggle"
+            aria-controls="navbarToggle"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-              <div class="navbar-nav mr-auto">
-                <!-- <a class="nav-item nav-link" href="#">Home</a>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <!-- <a class="nav-item nav-link" href="#">Home</a>
                 <a class="nav-item nav-link" href="#">Play</a> -->
-              </div>
+            </div>
 
-              <div class="navbar-nav">
-                <!-- <a class="nav-item nav-link" href="#"><i class="fas fa-list-ol"></i> Leaderboards</a> -->
-                <a class="nav-item nav-link" href="https://github.com/tshiels/chess"><i class="fab fa-github"></i> Github</a>
-              </div>
+            <div class="navbar-nav">
+              <!-- <a class="nav-item nav-link" href="#"><i class="fas fa-list-ol"></i> Leaderboards</a> -->
+              <a class="nav-item nav-link" href="https://github.com/urbanleon"
+                ><i class="fab fa-github"></i> Github</a
+              >
             </div>
           </div>
-        </nav>
+        </div>
+      </nav>
     </header>
 
-    
-
     <!-- <div class="board-container"> -->
-      
+
     <div class="board shadow-5">
       <div class="thinkingContainer">
         <div id="thinking">
-            <div></div><div></div><div></div>
-            <div></div><div></div><div></div>
-            <div></div><div></div><div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
-      
-      <div id="a8" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/br.png"></div>
-      <div id="b8" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bn.png"></div>
-      <div id="c8" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bb.png"></div>
-      <div id="d8" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bq.png"></div>
-      <div id="e8" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bk.png"></div>
-      <div id="f8" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bb.png"></div>
-      <div id="g8" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bn.png"></div>
-      <div id="h8" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/br.png"></div>
 
-      <div id="a7" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="b7" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="c7" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="d7" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="e7" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="f7" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="g7" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
-      <div id="h7" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"></div>
+      <div id="a8" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/br.png"
+        />
+      </div>
+      <div id="b8" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bn.png"
+        />
+      </div>
+      <div id="c8" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bb.png"
+        />
+      </div>
+      <div id="d8" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bq.png"
+        />
+      </div>
+      <div id="e8" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bk.png"
+        />
+      </div>
+      <div id="f8" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bb.png"
+        />
+      </div>
+      <div id="g8" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bn.png"
+        />
+      </div>
+      <div id="h8" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/br.png"
+        />
+      </div>
+
+      <div id="a7" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="b7" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="c7" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="d7" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="e7" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="f7" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="g7" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
+      <div id="h7" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/bp.png"
+        />
+      </div>
 
       <div id="a6" class="white square"></div>
       <div id="b6" class="black square"></div>
@@ -109,27 +217,90 @@
       <div id="g3" class="black square"></div>
       <div id="h3" class="white square"></div>
 
-      <div id="a2" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="b2" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="c2" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="d2" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="e2" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="f2" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="g2" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
-      <div id="h2" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"></div>
+      <div id="a2" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="b2" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="c2" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="d2" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="e2" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="f2" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="g2" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
+      <div id="h2" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wp.png"
+        />
+      </div>
 
-      <div id="a1" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wr.png"></div>
-      <div id="b1" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wn.png"></div>
-      <div id="c1" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wb.png"></div>
-      <div id="d1" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png"></div>
-      <div id="e1" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wk.png"></div>     
-      <div id="f1" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wb.png"></div>
-      <div id="g1" class="black square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wn.png"></div>
-      <div id="h1" class="white square"><img src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wr.png"></div>
+      <div id="a1" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wr.png"
+        />
+      </div>
+      <div id="b1" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wn.png"
+        />
+      </div>
+      <div id="c1" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wb.png"
+        />
+      </div>
+      <div id="d1" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wq.png"
+        />
+      </div>
+      <div id="e1" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wk.png"
+        />
+      </div>
+      <div id="f1" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wb.png"
+        />
+      </div>
+      <div id="g1" class="black square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wn.png"
+        />
+      </div>
+      <div id="h1" class="white square">
+        <img
+          src="https://images.chesscomfiles.com/chess-themes/pieces/neo/75/wr.png"
+        />
+      </div>
     </div>
     <!-- </div> -->
-    
-    
+
     <!-- <p class="printOut" id="bestMove"></p> -->
     <!-- <p class="printOut" id="pos"></p> -->
     <!-- <p class="printOut" id="fen"></p> -->
@@ -142,8 +313,20 @@
     </div>
     <script src="{% static 'game/board.js' %}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

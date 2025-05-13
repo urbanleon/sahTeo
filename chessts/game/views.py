@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 from django.shortcuts import render
 from django.http import HttpResponse
 import sys
@@ -6,6 +9,7 @@ import json
 import alpha_beta as ab
 import chess
 from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 board = chess.Board()

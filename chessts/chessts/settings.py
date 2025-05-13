@@ -25,7 +25,7 @@ SECRET_KEY = '!$&nxi0%8-p^+_&!tg)m*b@92p0#1kbkw2=^4^w=g#v_(a5!il'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 RENDER_EXTERNAL_HOSTNAME = 'https://chess-ts.onrender.com'
 if RENDER_EXTERNAL_HOSTNAME:
