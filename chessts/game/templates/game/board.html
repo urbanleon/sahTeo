@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+
+<meta name="csrf-token" content="{{ csrf_token }}" />
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +88,7 @@
 
     <!-- <div class="board-container"> -->
 
-    <div class="board shadow-5">
+    <div class="board shadow-5 {% if flip %}flipped{% endif %}">
       <div class="thinkingContainer">
         <div id="thinking">
           <div></div>
@@ -301,6 +305,20 @@
     </div>
     <!-- </div> -->
 
+    <div class="container text-center mt-4">
+      <div class="btn-group">
+        <button id="btn-restart" class="btn btn-outline-dark">Restart</button>
+        <button id="btn-switch" class="btn btn-outline-dark">
+          Switch Sides
+        </button>
+        <button id="btn-score" class="btn btn-outline-dark">Show Score</button>
+        <button id="btn-autoplay" class="btn btn-outline-dark">
+          Auto-Play
+        </button>
+        <button id="btn-undo" class="btn btn-secondary">Undo Move</button>
+      </div>
+    </div>
+
     <!-- <p class="printOut" id="bestMove"></p> -->
     <!-- <p class="printOut" id="pos"></p> -->
     <!-- <p class="printOut" id="fen"></p> -->
@@ -311,6 +329,10 @@
         <h3 id="endBy"></h3>
       </div>
     </div>
+
+    <script>
+      const playerColor = "{{ player_color }}";
+    </script>
     <script src="{% static 'game/board.js' %}"></script>
 
     <script

@@ -1,5 +1,11 @@
 // board.js
 
+function getCSRFToken() {
+  return document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+}
+
 // Grab necessary elements
 const pieces = document.querySelectorAll("img");
 const squares = document.querySelectorAll("div .square");
@@ -100,58 +106,85 @@ function moveBot(move) {
  * Initialize drag & drop for pieces
  */
 function initPieces() {
+  // Set in Django context
   pieces.forEach((piece) => {
+    const isWhite = piece.src.includes("/w");
+    const isBlack = piece.src.includes("/b");
+
+    // Skip pieces that don't belong to the player
+    if (
+      (playerColor === "white" && isBlack) ||
+      (playerColor === "black" && isWhite)
+    ) {
+      return;
+    }
+
     piece.ondragstart = () => false;
 
+    // Touch support
     piece.ontouchstart = function (e) {
       const curr = maxOverlap(this, potentialDrops(this));
       const moves = getValidMoves(this);
+
       if (e.touches.length > 1) {
         onTouchUp();
         return;
       }
+
       this.style.position = "absolute";
       this.style.zIndex = 1;
       document.body.append(this);
       moveAt(e.touches[0].pageX, e.touches[0].pageY, this);
+
       window.addEventListener("touchend", onTouchUp);
       document.addEventListener("touchmove", onTouchMove);
+
       function onTouchMove(ev) {
         moveAt(ev.touches[0].pageX, ev.touches[0].pageY, piece);
       }
+
       function onTouchUp() {
         dropPiece(piece, curr, moves);
         clean();
       }
+
       function clean() {
         document.removeEventListener("touchmove", onTouchMove);
         window.removeEventListener("touchend", onTouchUp);
       }
+
       highlightValidMoves(this);
     };
 
+    // Mouse support
     piece.onmousedown = function (e) {
       this.style.position = "absolute";
       this.style.zIndex = 1;
       this.style.cursor = "grabbing";
       document.body.append(this);
       moveAt(e.pageX, e.pageY, this);
+
       const curr = maxOverlap(this, potentialDrops(this));
       const moves = getValidMoves(this);
-      window.addEventListener("mousemove", onMm);
-      window.addEventListener("mouseup", onMu);
-      function onMm(ev) {
+
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
+
+      function onMouseMove(ev) {
         moveAt(ev.pageX, ev.pageY, piece);
       }
-      function onMu() {
+
+      function onMouseUp() {
         piece.style.cursor = "grab";
         dropPiece(piece, curr, moves);
         clean();
       }
+
       function clean() {
-        window.removeEventListener("mousemove", onMm);
-        window.removeEventListener("mouseup", onMu);
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseup", onMouseUp);
       }
+
       highlightValidMoves(this);
     };
   });
@@ -288,15 +321,40 @@ function checkEndGame() {
   }
 }
 
+// --- Engine Move Fetch Logic ---
 function sendFen() {
-  xhr.open("POST", document.URL, true);
-  xhr.send(JSON.stringify({ value: chess.fen() }));
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ value: chess.fen() }),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("Invalid engine response");
+      return response.text();
+    })
+    .then((move) => {
+      if (!move.match(/^[a-h][1-8][a-h][1-8][qrbn]?$/)) {
+        throw new Error("moveBot failed: bad move format: " + move);
+      }
+      moveBot(move);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      document.getElementById("thinking")?.classList.remove("lds-grid");
+    });
+}
+
+// Call sendFen when needed based on player's color vs turn:
+if (chess.turn() !== playerColor[0]) {
+  sendFen();
+  document.getElementById("thinking").classList.add("lds-grid");
 }
 
 function dropPiece(p, cs, vm) {
   const poss = potentialDrops(p);
   let did = cs.id;
   let chosen = null;
+
   if (poss.length) {
     const c = maxOverlap(p, poss);
     const valid = vm.some((m) => m.to === c.id);
@@ -305,13 +363,83 @@ function dropPiece(p, cs, vm) {
   } else {
     cs.append(p);
   }
+
   resetPosition(p);
   removeHighlights();
   const tm = checkSpecialMoves(cs.id, chosen, did, p);
   chess.move(tm);
-  if (chess.turn() === "b") {
-    sendFen();
+
+  // Check who should move next
+  const currentTurn = chess.turn() === "w" ? "white" : "black";
+
+  // If AI is the next to move
+  if (currentTurn !== playerColor) {
+    sendFen(); // triggers POST to /play and expects a move
     document.getElementById("thinking").classList.add("lds-grid");
   }
+
   checkEndGame();
 }
+
+document.getElementById("btn-restart").addEventListener("click", function () {
+  fetch("/play/restart/", { method: "POST" }).then(() => location.reload());
+});
+
+document.getElementById("btn-switch").addEventListener("click", function () {
+  fetch("/play/switch/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Optional: include CSRF token if using it
+      // "X-CSRFToken": getCSRFToken()
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to switch sides");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const board = document.querySelector(".board");
+
+      if (data.color === "black") {
+        board.classList.add("flipped");
+      } else {
+        board.classList.remove("flipped");
+      }
+
+      location.reload(); // reload to re-render with new FEN + perspective
+    })
+    .catch((error) => {
+      console.error("Switch sides failed:", error);
+      alert("Error switching sides. Try again.");
+    });
+});
+
+document.getElementById("btn-score").addEventListener("click", function () {
+  fetch("/play/score/")
+    .then((res) => res.json())
+    .then((data) => alert(data.score));
+});
+
+document.getElementById("btn-autoplay").addEventListener("click", function () {
+  fetch("/play/autoplay/", { method: "POST" }).then(() => location.reload());
+});
+
+document.getElementById("btn-undo").addEventListener("click", () => {
+  fetch("/undo/", { method: "POST" })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.fen) {
+        // Apply the FEN to the board manually if your logic allows
+        location.reload(); // Simplest fallback
+      } else {
+        alert("Undo failed.");
+      }
+    })
+    .catch((err) => {
+      console.error("Undo error:", err.message);
+      alert("Undo failed due to an error.");
+    });
+});
