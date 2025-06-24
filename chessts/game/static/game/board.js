@@ -423,8 +423,21 @@ document.getElementById("btn-score").addEventListener("click", function () {
     .then((data) => alert(data.score));
 });
 
-document.getElementById("btn-autoplay").addEventListener("click", function () {
-  fetch("/play/autoplay/", { method: "POST" }).then(() => location.reload());
+document.getElementById("btn-autoplay").addEventListener("click", () => {
+  const fen = chess.fen();
+  fetch("/auto-play/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fen: fen }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.move) {
+        moveBot(data.move);
+      }
+    });
 });
 
 document.getElementById("btn-undo").addEventListener("click", () => {
@@ -442,4 +455,13 @@ document.getElementById("btn-undo").addEventListener("click", () => {
       console.error("Undo error:", err.message);
       alert("Undo failed due to an error.");
     });
+});
+
+window.addEventListener("load", () => {
+  const board = document.querySelector(".board");
+  if (playerColor === "black") {
+    board.classList.add("flipped");
+  } else {
+    board.classList.remove("flipped");
+  }
 });

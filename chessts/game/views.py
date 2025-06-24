@@ -18,9 +18,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 
 import json
 import chess
+import chess.engine
 import alpha_beta as ab
 
 # Global board instance
@@ -39,24 +43,39 @@ def save_board_to_session(request, board):
 @csrf_exempt
 def play(request):
     if request.method == "POST":
-        fen = json.loads(request.body).get("value")
-        board = chess.Board(fen)
-        move, _ = ab.opening(board)
-        board.push(move)
-        save_board_to_session(request, board)
+        data = json.loads(request.body)
+        fen = data.get("value")
+        board.set_fen(fen)
+
+        from alpha_beta import opening  # motorul tău custom
+        if board.turn == chess.WHITE:
+            move, _ = opening(board)
+        else:
+            move = chess.Move.from_uci(get_stockfish_move(fen))
+
         return HttpResponse(move.uci())
 
-    board = get_board_from_session(request)
-    player_color = request.session.get("player_color", "white")
+    return render(request, "game/board.html")
 
-    return render(request, 'game/board.html', {
-        "flip": player_color == "black",
-        "player_color": player_color,
-        "fen": board.fen()
-    })
+@csrf_exempt
+def auto_play(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        fen = data.get("fen", None)
 
+        if not fen:
+            return JsonResponse({"error": "No FEN provided"}, status=400)
 
+        board = chess.Board(fen)
+        
+        # Configurează corect calea către Stockfish!
+        engine = chess.engine.SimpleEngine.popen_uci("C:\\Code\\Licenta\\stockfish\\stockfish-windows-x86-64-avx2.exe")
 
+        result = engine.play(board, chess.engine.Limit(time=0.1))
+        engine.quit()
+
+        return JsonResponse({"move": result.move.uci()})
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 # === RESTART GAME ===
 @csrf_exempt
@@ -121,21 +140,6 @@ def score_view(request):
     return JsonResponse({"score": result})
 
 
-# === AUTO PLAY ===
-@csrf_exempt
-@require_POST
-def auto_play(request):
-    global board
-
-    for _ in range(6):
-        if board.is_game_over():
-            break
-        move, _ = ab.minimax(board, 2, board.turn, -10000, 10000)
-        if move:
-            board.push(move)
-
-    request.session["board_fen"] = board.fen()
-    return HttpResponse("Auto-play finished")
 
 @csrf_exempt
 def undo_move(request):
@@ -151,3 +155,4 @@ def undo_move(request):
         else:
             return JsonResponse({ "error": "No moves to undo." }, status=400)
     return JsonResponse({ "error": "Invalid method" }, status=405)
+
